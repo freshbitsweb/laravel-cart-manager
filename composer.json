@@ -15,7 +15,10 @@
     "autoload": {
         "psr-4": {
             "Freshbitsweb\\CartManager\\": "src/"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "extra": {
         "laravel": {
