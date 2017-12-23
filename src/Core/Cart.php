@@ -7,6 +7,8 @@ use Illuminate\Contracts\Support\Arrayable;
 
 class Cart implements Arrayable
 {
+    protected $id = null;
+
     protected $cartDriver;
 
     protected $items = [];
@@ -39,25 +41,25 @@ class Cart implements Arrayable
     public function __construct(CartDriver $cartDriver)
     {
         $this->cartDriver = $cartDriver;
+        $this->items = collect($this->items);
 
-        $cartData = $this->cartDriver->getCartData();
-        $cartItems = $cartData['items'];
-        unset($cartData['items']);
+        if ($cartData = $this->cartDriver->getCartData()) {
+            $this->setItems($cartData->items);
 
-        $this->setProperties($cartData);
-        $this->setItems($cartItems);
+            $this->setProperties($cartData->getAttributes());
+        }
     }
 
     /**
      * Sets the object properties from the provided data
      *
-     * @param array Cart data
+     * @param array Cart attributes
      * @return void
      */
-    protected function setProperties($cartData)
+    protected function setProperties($attributes)
     {
-        foreach ($cartData as $key => $value) {
-            $this->{$key} = $value;
+        foreach ($attributes as $key => $value) {
+            $this->{camel_case($key)} = $value;
         }
     }
 
@@ -69,11 +71,9 @@ class Cart implements Arrayable
      */
     protected function setItems($cartItems)
     {
-        $this->items = collect($this->items);
-
-        foreach($cartItems as $cartItem) {
-            $this->items->push(CartItem::createFrom($cartItem));
-        }
+        $cartItems->each(function ($cartItem) {
+            $this->items->push(CartItem::createFrom($cartItem->toArray()));
+        });
     }
 
     /**
@@ -84,7 +84,7 @@ class Cart implements Arrayable
      */
     public function add($entity)
     {
-        $this->items->push(CartItem::create($entity));
+        $this->items->push(CartItem::createFrom($entity));
 
         $this->updateTotals();
 
@@ -200,7 +200,7 @@ class Cart implements Arrayable
      */
     public function toArray()
     {
-        return [
+        $cartData = [
             // First toArray() for CartItem object and second one for the Illuminate Collection
             'items' => $this->items->map->toArray()->toArray(),
             'subtotal' => $this->subtotal,
@@ -214,5 +214,11 @@ class Cart implements Arrayable
             'round_off' => $this->roundOff,
             'payable' => $this->payable,
         ];
+
+        if ($this->id) {
+            $cartData['id'] = $this->id;
+        }
+
+        return $cartData;
     }
 }

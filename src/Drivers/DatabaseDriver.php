@@ -17,19 +17,33 @@ class DatabaseDriver implements CartDriver
      */
     public function getCartData()
     {
-        return [
-            'items' => [],
-            'subtotal' => 0,
-            'discount' => 0,
-            'discountPercentage' => 0,
-            'couponId' => NULL,
-            'shippingCharges' => 0,
-            'netTotal' => 0,
-            'tax' => 0,
-            'total' => 0,
-            'roundOff' => 0,
-            'payable' => 0,
-        ];
+        $selectColumns = ['id', 'subtotal', 'discount', 'discount_percentage', 'coupon_id', 'shipping_charges', 'net_total', 'tax', 'total', 'round_off', 'payable'];
+
+        $cartItemColumns = 'items:id,cart_id,model_type,model_id,name,price,quantity';
+
+        $cartData = Cart::with($cartItemColumns)->where($this->cartIdentifier())->first($selectColumns);
+
+        // If there is no cart record for the logged in customer, try with cookie identifier
+        if (! $cartData && Auth::guard(config('cart_manager.auth_guard'))->check()) {
+            if ($cartData = Cart::with($cartItemColumns)->where($this->getCookieElement())->first($selectColumns)) {
+                $this->assignCustomerToCartRecord();
+            }
+        }
+
+        return $cartData;
+    }
+
+    /**
+     * Assigns the customer to the cart record identified by cookie
+     *
+     * @return void
+     */
+    protected function assignCustomerToCartRecord()
+    {
+        // Assign the logged in customer to the cart record
+        Cart::where($this->getCookieElement())->update([
+            'auth_user' => Auth::guard(config('cart_manager.auth_guard'))->id()
+        ]);
     }
 
     /**

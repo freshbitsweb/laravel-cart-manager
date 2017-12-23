@@ -8,6 +8,8 @@ use Illuminate\Contracts\Support\Arrayable;
 
 class CartItem implements Arrayable
 {
+    public $id = null;
+
     public $modelType;
 
     public $modelId;
@@ -21,10 +23,25 @@ class CartItem implements Arrayable
     /**
      * Creates a new cart item
      *
-     * @param Illuminate\Database\Eloquent\Model
+     * @param Illuminate\Database\Eloquent\Model|array
      * @return \Freshbitsweb\CartManager\Core\CartItem
      */
     public function __construct($entity)
+    {
+        if (is_array($entity)) {
+            return $this->createFromArray($entity);
+        }
+
+        return $this->createFromModel($entity);
+    }
+
+    /**
+     * Creates a new cart item from a model instance
+     *
+     * @param Illuminate\Database\Eloquent\Model
+     * @return \Freshbitsweb\CartManager\Core\CartItem
+     */
+    protected function createFromModel($entity)
     {
         $this->modelType = get_class($entity);
         $this->modelId = $entity->{$entity->getKeyName()};
@@ -35,14 +52,32 @@ class CartItem implements Arrayable
     }
 
     /**
-     * Creates a new cart item
+     * Creates a new cart item from an array
      *
-     * @param Illuminate\Database\Eloquent\Model
+     * @param array
      * @return \Freshbitsweb\CartManager\Core\CartItem
      */
-    public static function create($entity)
+    protected function createFromArray($array)
     {
-        return new static($entity);
+        $this->id = $array['id'];
+        $this->modelType = $array['model_type'];
+        $this->modelId = $array['model_id'];
+        $this->name = $array['name'];
+        $this->price = $array['price'];
+        $this->quantity = $array['quantity'];
+
+        return $this;
+    }
+
+    /**
+     * Creates a new cart item from an array or entity
+     *
+     * @param Illuminate\Database\Eloquent\Model|array
+     * @return \Freshbitsweb\CartManager\Core\CartItem
+     */
+    public static function createFrom($array)
+    {
+        return new static($array);
     }
 
     /**
@@ -96,12 +131,18 @@ class CartItem implements Arrayable
      */
     public function toArray()
     {
-        return [
+        $cartItemData = [
             'model_type' => $this->modelType,
             'model_id' => $this->modelId,
             'name' => $this->name,
             'price' => $this->price,
             'quantity' => $this->quantity,
         ];
+
+        if ($this->id) {
+            $cartItemData['id'] = $this->id;
+        }
+
+        return $cartItemData;
     }
 }

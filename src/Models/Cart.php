@@ -15,4 +15,12 @@ class Cart extends Model
         'cookie', 'auth_user', 'subtotal', 'discount', 'discount_percentage', 'coupon_id',
         'shipping_charges', 'net_total', 'tax', 'total', 'round_off', 'payable',
     ];
+
+    /**
+     * Get the items of the cart
+     */
+    public function items()
+    {
+        return $this->hasMany(CartItem::class);
+    }
 }
