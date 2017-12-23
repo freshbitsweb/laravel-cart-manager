@@ -19,18 +19,32 @@ class DatabaseDriver implements CartDriver
     {
         $selectColumns = ['id', 'subtotal', 'discount', 'discount_percentage', 'coupon_id', 'shipping_charges', 'net_total', 'tax', 'total', 'round_off', 'payable'];
 
-        $cartItemColumns = 'items:id,cart_id,model_type,model_id,name,price,quantity';
-
-        $cartData = Cart::with($cartItemColumns)->where($this->cartIdentifier())->first($selectColumns);
+        $cartData = Cart::with($this->cartItemsQuery())->where($this->cartIdentifier())->first($selectColumns);
 
         // If there is no cart record for the logged in customer, try with cookie identifier
         if (! $cartData && Auth::guard(config('cart_manager.auth_guard'))->check()) {
-            if ($cartData = Cart::with($cartItemColumns)->where($this->getCookieElement())->first($selectColumns)) {
+            if ($cartData = Cart::with($this->cartItemsQuery())->where($this->getCookieElement())->first($selectColumns)) {
                 $this->assignCustomerToCartRecord();
             }
         }
 
         return $cartData;
+    }
+
+    /**
+     * Returns the query to fetch cart items
+     *
+     * @return array
+     */
+    protected function cartItemsQuery()
+    {
+        return [
+            'items' => function($query) {
+                $query->select('id', 'cart_id', 'model_type', 'model_id', 'name', 'price', 'quantity')
+                    ->orderBy('id', 'asc')
+                ;
+            }
+        ];
     }
 
     /**
@@ -85,6 +99,17 @@ class DatabaseDriver implements CartDriver
     {
         $cartItem['cart_id'] = $cartId;
         CartItem::create($cartItem);
+    }
+
+    /**
+     * Removes a cart item from the database
+     *
+     * @param int Cart item id
+     * @return void
+     */
+    public function removeCartItem($cartItemId)
+    {
+        CartItem::destroy($cartItemId);
     }
 
     /**

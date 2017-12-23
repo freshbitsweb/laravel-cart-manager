@@ -96,7 +96,7 @@ class Cart implements Arrayable
 
         $this->storeCartData($isNewItem);
 
-        return $this->toArray();
+        return $this->toArray($withItems = true);
     }
 
     /**
@@ -241,10 +241,10 @@ class Cart implements Arrayable
      * @param boolean Weather its a new item or existing
      * @return void
      */
-    protected function storeCartData($isNewItem)
+    protected function storeCartData($isNewItem = false)
     {
         if ($this->id) {
-            $this->cartDriver->updateCart($this->toArray($withItems = false));
+            $this->cartDriver->updateCart($this->toArray());
 
             if ($isNewItem) {
                 $this->cartDriver->addCartItem($this->id, $this->items->last()->toArray());
@@ -253,7 +253,7 @@ class Cart implements Arrayable
             return;
         }
 
-        $this->cartDriver->storeNewCartData($this->toArray());
+        $this->cartDriver->storeNewCartData($this->toArray($withItems = true));
     }
 
     /**
@@ -262,7 +262,7 @@ class Cart implements Arrayable
      * @param boolean Weather items should also be covered
      * @return array
      */
-    public function toArray($withItems = true)
+    public function toArray($withItems = false)
     {
         $cartData = [
             'subtotal' => $this->subtotal,
@@ -287,5 +287,23 @@ class Cart implements Arrayable
         }
 
         return $cartData;
+    }
+
+    /**
+     * Removes an item from the cart
+     *
+     * @param int index of the item
+     * @return json
+     */
+    public function removeAt($itemIndex)
+    {
+        $this->cartDriver->removeCartItem($this->items->get($itemIndex)->id);
+        $this->items->forget($itemIndex);
+
+        $this->updateTotals();
+
+        $this->storeCartData();
+
+        return $this->toArray();
     }
 }
