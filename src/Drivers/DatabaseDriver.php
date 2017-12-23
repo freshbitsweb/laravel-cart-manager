@@ -52,16 +52,39 @@ class DatabaseDriver implements CartDriver
      * @param array Cart data
      * @return void
      */
-    public function storeCartData($cartData)
+    public function storeNewCartData($cartData)
     {
         $cartItems = $cartData['items'];
         unset($cartData['items']);
         $cartId = $this->storeCartDetails($cartData);
 
         foreach($cartItems as $cartItem) {
-            $cartItem['cart_id'] = $cartId;
-            CartItem::create($cartItem);
+            $this->addCartItem($cartId, $cartItem);
         }
+    }
+
+    /**
+     * Updates the cart record with the new data
+     *
+     * @param array Cart data
+     * @return void
+     */
+    public function updateCart($cartData)
+    {
+        Cart::where('id', $cartData['id'])->update($cartData);
+    }
+
+    /**
+     * Add a new cart item to the database
+     *
+     * @param int Cart id
+     * @param array Cart item data
+     * @return void
+     */
+    public function addCartItem($cartId, $cartItem)
+    {
+        $cartItem['cart_id'] = $cartId;
+        CartItem::create($cartItem);
     }
 
     /**

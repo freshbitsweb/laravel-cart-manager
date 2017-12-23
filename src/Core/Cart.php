@@ -84,39 +84,50 @@ class Cart implements Arrayable
      */
     public function add($entity)
     {
-        $this->addOrUpdateQuantity($entity);
+        if ($this->itemExists($entity)) {
+            $this->updateQuantity($entity);
+            $isNewItem = false;
+        } else {
+            $this->items->push(CartItem::createFrom($entity));
+            $isNewItem = true;
+        }
 
         $this->updateTotals();
 
-        $this->storeCartData();
+        $this->storeCartData($isNewItem);
 
         return $this->toArray();
     }
 
     /**
-     * Adds an item to the cart or updates it's quantity
+     * Updates the quantity of the cart item
      *
      * @param Illuminate\Database\Eloquent\Model
      * @return void
      */
-    protected function addOrUpdateQuantity($entity)
+    protected function updateQuantity($entity)
     {
-        if ($this->items->contains($this->cartItemsCheck($entity))) {
-            $cartItemIndex = $this->items->search($this->cartItemsCheck($entity));
+        $cartItemIndex = $this->items->search($this->cartItemsCheck($entity));
 
-            // Increment quantity of the local ibject
-            $this->items[$cartItemIndex]->quantity++;
+        // Increment quantity of the local ibject
+        $this->items[$cartItemIndex]->quantity++;
 
-            // Set new quantity in the cart driver
-            $this->cartDriver->setCartItemQuantity(
-                $this->items[$cartItemIndex]->id,
-                $this->items[$cartItemIndex]->quantity
-            );
+        // Set new quantity in the cart driver
+        $this->cartDriver->setCartItemQuantity(
+            $this->items[$cartItemIndex]->id,
+            $this->items[$cartItemIndex]->quantity
+        );
+    }
 
-            return;
-        }
-
-        $this->items->push(CartItem::createFrom($entity));
+    /**
+     * Checks if an item already exists in the cart
+     *
+     * @param Illuminate\Database\Eloquent\Model
+     * @return boolean
+     */
+    protected function itemExists($entity)
+    {
+        return $this->items->contains($this->cartItemsCheck($entity));
     }
 
     /**
@@ -151,7 +162,7 @@ class Cart implements Arrayable
 
         $this->setShippingCharges();
 
-        $this->netTotal = $this->subtotal - $this->discount + $this->shippingCharges;
+        $this->netTotal = round($this->subtotal - $this->discount + $this->shippingCharges, 2);
 
         $this->tax = round(($this->netTotal * config('cart_manager.tax_percentage')) / 100, 2);
 
@@ -167,9 +178,9 @@ class Cart implements Arrayable
      */
     protected function setSubtotal()
     {
-        $this->subtotal = $this->items->sum(function ($cartItem) {
+        $this->subtotal = round($this->items->sum(function ($cartItem) {
             return $cartItem->price * $cartItem->quantity;
-        });
+        }), 2);
     }
 
     /**
@@ -227,23 +238,33 @@ class Cart implements Arrayable
     /**
      * Stores the cart data on the cart driver
      *
+     * @param boolean Weather its a new item or existing
      * @return void
      */
-    protected function storeCartData()
+    protected function storeCartData($isNewItem)
     {
-        $this->cartDriver->storeCartData($this->toArray());
+        if ($this->id) {
+            $this->cartDriver->updateCart($this->toArray($withItems = false));
+
+            if ($isNewItem) {
+                $this->cartDriver->addCartItem($this->id, $this->items->last()->toArray());
+            }
+
+            return;
+        }
+
+        $this->cartDriver->storeNewCartData($this->toArray());
     }
 
     /**
      * Returns object properties as array
      *
+     * @param boolean Weather items should also be covered
      * @return array
      */
-    public function toArray()
+    public function toArray($withItems = true)
     {
         $cartData = [
-            // First toArray() for CartItem object and second one for the Illuminate Collection
-            'items' => $this->items->map->toArray()->toArray(),
             'subtotal' => $this->subtotal,
             'discount' => $this->discount,
             'discount_percentage' => $this->discountPercentage,
@@ -258,6 +279,11 @@ class Cart implements Arrayable
 
         if ($this->id) {
             $cartData['id'] = $this->id;
+        }
+
+        if ($withItems) {
+            // First toArray() for CartItem object and second one for the Illuminate Collection
+            $cartData['items'] = $this->items->map->toArray()->toArray();
         }
 
         return $cartData;

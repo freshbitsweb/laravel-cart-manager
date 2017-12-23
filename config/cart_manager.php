@@ -13,7 +13,8 @@ return [
     // Specify the minimum order amount to avoid shipping charges
     'shipping_charges_threshold' => 100,
 
-    // Tax amount is applied on net total (subtotal - discount + shipping charges) and is rounded to 2 decimals
+    // Tax amount is applied on net total (subtotal - discount + shipping charges)
+    // subtotal, tax, net total and total are rounded to 2 decimals
     'tax_percentage' => 6,
 
     // Round off the total amount (net total + tax) to nearest (0 or 0.05 or 0.1 or 0.5 or 1)
