@@ -92,11 +92,22 @@ class Cart implements Arrayable
             $isNewItem = true;
         }
 
+        return $this->cartUpdates($isNewItem);
+    }
+
+    /**
+     * Performs cart updates and returns the data
+     *
+     * @param boolean Weather its a new item or existing
+     * @return json
+     */
+    protected function cartUpdates($isNewItem = false)
+    {
         $this->updateTotals();
 
         $this->storeCartData($isNewItem);
 
-        return $this->toArray($withItems = true);
+        return $this->toArray();
     }
 
     /**
@@ -244,7 +255,7 @@ class Cart implements Arrayable
     protected function storeCartData($isNewItem = false)
     {
         if ($this->id) {
-            $this->cartDriver->updateCart($this->toArray());
+            $this->cartDriver->updateCart($this->toArray($withItems = false));
 
             if ($isNewItem) {
                 $this->cartDriver->addCartItem($this->id, $this->items->last()->toArray());
@@ -253,7 +264,7 @@ class Cart implements Arrayable
             return;
         }
 
-        $this->cartDriver->storeNewCartData($this->toArray($withItems = true));
+        $this->cartDriver->storeNewCartData($this->toArray());
     }
 
     /**
@@ -262,7 +273,7 @@ class Cart implements Arrayable
      * @param boolean Weather items should also be covered
      * @return array
      */
-    public function toArray($withItems = false)
+    public function toArray($withItems = true)
     {
         $cartData = [
             'subtotal' => $this->subtotal,
@@ -295,15 +306,51 @@ class Cart implements Arrayable
      * @param int index of the item
      * @return json
      */
-    public function removeAt($itemIndex)
+    public function removeAt($cartItemIndex)
     {
-        $this->cartDriver->removeCartItem($this->items->get($itemIndex)->id);
-        $this->items->forget($itemIndex);
+        $this->cartDriver->removeCartItem($this->items[$cartItemIndex]->id);
+        $this->items = $this->items->forget($cartItemIndex)->values(); // To reset the index
 
-        $this->updateTotals();
+        return $this->cartUpdates();
+    }
 
-        $this->storeCartData();
+    /**
+     * Increments the quantity of a cart item
+     *
+     * @param int Index of the cart item
+     * @return json
+     */
+    public function incrementQuantityAt($cartItemIndex)
+    {
+        $this->items[$cartItemIndex]->quantity++;
 
-        return $this->toArray();
+        $this->cartDriver->setCartItemQuantity(
+            $this->items[$cartItemIndex]->id,
+            $this->items[$cartItemIndex]->quantity
+        );
+
+        return $this->cartUpdates();
+    }
+
+    /**
+     * Increments the quantity of a cart item
+     *
+     * @param int Index of the cart item
+     * @return json
+     */
+    public function decrementQuantityAt($cartItemIndex)
+    {
+        if ($this->items[$cartItemIndex]->quantity == 1) {
+            return $this->removeAt($cartItemIndex);
+        }
+
+        $this->items[$cartItemIndex]->quantity--;
+
+        $this->cartDriver->setCartItemQuantity(
+            $this->items[$cartItemIndex]->id,
+            $this->items[$cartItemIndex]->quantity
+        );
+
+        return $this->cartUpdates();
     }
 }
