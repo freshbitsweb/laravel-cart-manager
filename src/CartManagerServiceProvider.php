@@ -48,6 +48,6 @@ class CartManagerServiceProvider extends ServiceProvider
 
         // Attach the cart cookie to the user browser
         $httpKernel = $this->app->make(Kernel::class);
-        $httpKernel->pushMiddleware(AttachCartCookie::class);
+        $httpKernel->prependMiddleware(AttachCartCookie::class);
     }
 }
