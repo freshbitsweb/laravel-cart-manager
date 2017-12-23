@@ -104,4 +104,16 @@ class DatabaseDriver implements CartDriver
     {
         return ['cookie' => Cookie::get(config('cart_manager.cookie_name'))];
     }
+
+    /**
+     * Updates the quantity in the cart items table
+     *
+     * @param int Id of the cart item
+     * @param int quantity of the cart item
+     * @return void
+     */
+    public function setCartItemQuantity($cartItemId, $quantity)
+    {
+        CartItem::where('id', $cartItemId)->update(['quantity' => $quantity]);
+    }
 }
