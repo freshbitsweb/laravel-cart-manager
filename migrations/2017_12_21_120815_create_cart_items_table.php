@@ -20,6 +20,7 @@ class CreateCartItemsTable extends Migration
             $table->integer('model_id')->unsigned();
             $table->string('name');
             $table->decimal('price', 8, 2);
+            $table->string('image')->nullable();
             $table->integer('quantity');
             $table->timestamps();
         });

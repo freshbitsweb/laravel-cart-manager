@@ -18,6 +18,8 @@ class CartItem implements Arrayable
 
     public $price;
 
+    public $image = null;
+
     public $quantity = 1;
 
     /**
@@ -47,6 +49,7 @@ class CartItem implements Arrayable
         $this->modelId = $entity->{$entity->getKeyName()};
         $this->setName($entity);
         $this->setPrice($entity);
+        $this->setImage($entity);
 
         return $this;
     }
@@ -64,6 +67,7 @@ class CartItem implements Arrayable
         $this->modelId = $array['model_id'];
         $this->name = $array['name'];
         $this->price = $array['price'];
+        $this->image = $array['image'];
         $this->quantity = $array['quantity'];
 
         return $this;
@@ -125,6 +129,24 @@ class CartItem implements Arrayable
     }
 
     /**
+     * Sets the image of the item
+     *
+     * @param Illuminate\Database\Eloquent\Model
+     * @return void
+     */
+    protected function setImage($entity)
+    {
+        if (method_exists($entity, 'getImage')) {
+            $this->image = $entity->getImage();
+            return;
+        }
+
+        if (isset($entity->image)) {
+            $this->image = $entity->image;
+        }
+    }
+
+    /**
      * Returns object properties as array
      *
      * @return array
@@ -136,6 +158,7 @@ class CartItem implements Arrayable
             'model_id' => $this->modelId,
             'name' => $this->name,
             'price' => $this->price,
+            'image' => $this->image,
             'quantity' => $this->quantity,
         ];
 
