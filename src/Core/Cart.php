@@ -85,14 +85,14 @@ class Cart implements Arrayable
     public function add($entity)
     {
         if ($this->itemExists($entity)) {
-            $this->updateQuantity($entity);
-            $isNewItem = false;
-        } else {
-            $this->items->push(CartItem::createFrom($entity));
-            $isNewItem = true;
+            $cartItemIndex = $this->items->search($this->cartItemsCheck($entity));
+
+            return $this->incrementQuantityAt($cartItemIndex);
         }
 
-        return $this->cartUpdates($isNewItem);
+        $this->items->push(CartItem::createFrom($entity));
+
+        return $this->cartUpdates($isNewItem = true);
     }
 
     /**
@@ -108,26 +108,6 @@ class Cart implements Arrayable
         $this->storeCartData($isNewItem);
 
         return $this->toArray();
-    }
-
-    /**
-     * Updates the quantity of the cart item
-     *
-     * @param Illuminate\Database\Eloquent\Model
-     * @return void
-     */
-    protected function updateQuantity($entity)
-    {
-        $cartItemIndex = $this->items->search($this->cartItemsCheck($entity));
-
-        // Increment quantity of the local ibject
-        $this->items[$cartItemIndex]->quantity++;
-
-        // Set new quantity in the cart driver
-        $this->cartDriver->setCartItemQuantity(
-            $this->items[$cartItemIndex]->id,
-            $this->items[$cartItemIndex]->quantity
-        );
     }
 
     /**
