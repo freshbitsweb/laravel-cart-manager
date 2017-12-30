@@ -173,6 +173,10 @@ class DatabaseDriver implements CartDriver
      */
     public function clearData()
     {
-        Cart::where($this->cartIdentifier())->first()->delete();
+        $cart = Cart::where($this->cartIdentifier())->first();
+
+        if ($cart) {
+            $cart->delete();
+        }
     }
 }
