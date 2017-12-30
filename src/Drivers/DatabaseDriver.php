@@ -80,12 +80,13 @@ class DatabaseDriver implements CartDriver
     /**
      * Updates the cart record with the new data
      *
+     * @param int Id of the cart
      * @param array Cart data
      * @return void
      */
-    public function updateCart($cartData)
+    public function updateCart($cartId, $cartData)
     {
-        Cart::where('id', $cartData['id'])->update($cartData);
+        Cart::where('id', $cartId)->update($cartData);
     }
 
     /**
@@ -163,5 +164,15 @@ class DatabaseDriver implements CartDriver
     public function setCartItemQuantity($cartItemId, $quantity)
     {
         CartItem::where('id', $cartItemId)->update(['quantity' => $quantity]);
+    }
+
+    /**
+     * Clears the cart details from the database
+     *
+     * @return void
+     */
+    public function clearData()
+    {
+        Cart::where($this->cartIdentifier())->first()->delete();
     }
 }

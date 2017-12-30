@@ -235,7 +235,7 @@ class Cart implements Arrayable
     protected function storeCartData($isNewItem = false)
     {
         if ($this->id) {
-            $this->cartDriver->updateCart($this->data());
+            $this->cartDriver->updateCart($this->id, $this->data());
 
             if ($isNewItem) {
                 $this->cartDriver->addCartItem($this->id, $this->items->last()->toArray());
@@ -338,5 +338,15 @@ class Cart implements Arrayable
         );
 
         return $this->cartUpdates();
+    }
+
+    /**
+     * Clears the cart details from the cart driver
+     *
+     * @return void
+     */
+    public function clear()
+    {
+        $this->cartDriver->clearData();
     }
 }

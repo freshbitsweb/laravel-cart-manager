@@ -4,7 +4,9 @@ namespace Freshbitsweb\CartManager;
 
 use Freshbitsweb\CartManager\Contracts\CartDriver;
 use Freshbitsweb\CartManager\Core\Cart;
+use Freshbitsweb\CartManager\Observers\CartObserver;
 use Freshbitsweb\CartManager\Middlewares\AttachCartCookie;
+use Freshbitsweb\CartManager\Models\Cart as CartModel;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Support\ServiceProvider;
 
@@ -24,6 +26,8 @@ class CartManagerServiceProvider extends ServiceProvider
 
         // Migration files path
         $this->loadMigrationsFrom(__DIR__.'/../migrations');
+
+        CartModel::observe(CartObserver::class);
     }
 
     /**
