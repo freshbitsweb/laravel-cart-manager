@@ -235,7 +235,7 @@ class Cart implements Arrayable
     protected function storeCartData($isNewItem = false)
     {
         if ($this->id) {
-            $this->cartDriver->updateCart($this->toArray($withItems = false));
+            $this->cartDriver->updateCart($this->data());
 
             if ($isNewItem) {
                 $this->cartDriver->addCartItem($this->id, $this->items->last()->toArray());
@@ -268,16 +268,22 @@ class Cart implements Arrayable
             'payable' => $this->payable,
         ];
 
-        if ($this->id) {
-            $cartData['id'] = $this->id;
-        }
-
         if ($withItems) {
             // First toArray() for CartItem object and second one for the Illuminate Collection
             $cartData['items'] = $this->items->map->toArray()->toArray();
         }
 
         return $cartData;
+    }
+
+    /**
+     * Returns the cart data without items
+     *
+     * @return array
+     */
+    public function data()
+    {
+        return $this->toArray($withItems = false);
     }
 
     /**
