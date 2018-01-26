@@ -4,6 +4,7 @@ namespace Freshbitsweb\CartManager\Core;
 
 use BadMethodCallException;
 use Freshbitsweb\CartManager\Contracts\CartDriver;
+use Freshbitsweb\CartManager\Exceptions\IncorrectDiscount;
 use Illuminate\Contracts\Support\Arrayable;
 
 class Cart implements Arrayable
@@ -81,7 +82,7 @@ class Cart implements Arrayable
      * Adds an item to the cart
      *
      * @param Illuminate\Database\Eloquent\Model
-     * @return void
+     * @return array
      */
     public function add($entity)
     {
@@ -100,11 +101,12 @@ class Cart implements Arrayable
      * Performs cart updates and returns the data
      *
      * @param boolean Weather its a new item or existing
-     * @return json
+     * @param boolean Weather to keep the discount in the cart
+     * @return array
      */
-    protected function cartUpdates($isNewItem = false)
+    protected function cartUpdates($isNewItem = false, $keepDiscount = false)
     {
-        $this->updateTotals();
+        $this->updateTotals($keepDiscount);
 
         $this->storeCartData($isNewItem);
 
@@ -291,7 +293,7 @@ class Cart implements Arrayable
      * Removes an item from the cart
      *
      * @param int index of the item
-     * @return json
+     * @return array
      */
     public function removeAt($cartItemIndex)
     {
@@ -305,7 +307,7 @@ class Cart implements Arrayable
      * Increments the quantity of a cart item
      *
      * @param int Index of the cart item
-     * @return json
+     * @return array
      */
     public function incrementQuantityAt($cartItemIndex)
     {
@@ -323,7 +325,7 @@ class Cart implements Arrayable
      * Increments the quantity of a cart item
      *
      * @param int Index of the cart item
-     * @return json
+     * @return array
      */
     public function decrementQuantityAt($cartItemIndex)
     {
@@ -368,5 +370,46 @@ class Cart implements Arrayable
         }
 
         throw new BadMethodCallException('Method [{$method}] does not exist. Check documentation please.');
+    }
+
+    /**
+     * Applies disount to the cart
+     *
+     * @param double Discount Percentage
+     * @param int Coupon id
+     * @return array
+     * @throws IncorrectDiscount
+     */
+    public function applyDiscount($percentage, $couponId = NULL)
+    {
+        if ($this->subtotal == 0) {
+            throw new IncorrectDiscount("Discount cannot be applied on an empty cart");
+        }
+
+        $this->discountPercentage = $percentage;
+        $this->couponId = $couponId;
+        $this->discount = round(($this->subtotal * $percentage) / 100, 2);
+
+        return $this->cartUpdates($isNewItem = false, $keepDiscount = true);
+    }
+
+    /**
+     * Applies flat disount to the cart
+     *
+     * @param double Discount amount
+     * @param int Coupon id
+     * @return array
+     * @throws IncorrectDiscount
+     */
+    public function applyFlatDiscount($amount, $couponId = null)
+    {
+        if ($amount > $this->subtotal) {
+            throw new IncorrectDiscount("The discount amount cannot be more that subtotal of the cart");
+        }
+
+        $this->discount = round($amount, 2);
+        $this->couponId = $couponId;
+
+        return $this->cartUpdates($isNewItem = false, $keepDiscount = true);
     }
 }
