@@ -2,6 +2,7 @@
 
 namespace Freshbitsweb\CartManager\Core;
 
+use BadMethodCallException;
 use Freshbitsweb\CartManager\Contracts\CartDriver;
 use Illuminate\Contracts\Support\Arrayable;
 
@@ -348,5 +349,24 @@ class Cart implements Arrayable
     public function clear()
     {
         $this->cartDriver->clearData();
+    }
+
+    /**
+     * Serves as a getter for cart properties
+     *
+     * @param string Method name
+     * @param array Arguments
+     * @return mixed
+     * @throws \BadMethodCallException
+     */
+    public function __call($method, $arguments)
+    {
+        $property = camel_case(str_replace_first('get', '', $method));
+
+        if (property_exists($this, $property)) {
+            return $this->$property;
+        }
+
+        throw new BadMethodCallException('Method [{$method}] does not exist. Check documentation please.');
     }
 }
