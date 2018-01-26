@@ -429,6 +429,7 @@ class Cart implements Arrayable
         }
 
         $this->discount = round($amount, 2);
+        $this->discountPercentage = 0;
         $this->couponId = $couponId;
 
         return $this->cartUpdates($isNewItem = false, $keepDiscount = true);
