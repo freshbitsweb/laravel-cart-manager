@@ -5,6 +5,7 @@ namespace Freshbitsweb\CartManager\Core;
 use BadMethodCallException;
 use Freshbitsweb\CartManager\Contracts\CartDriver;
 use Freshbitsweb\CartManager\Exceptions\IncorrectDiscount;
+use Freshbitsweb\CartManager\Exceptions\ItemMissing;
 use Illuminate\Contracts\Support\Arrayable;
 
 class Cart implements Arrayable
@@ -297,10 +298,26 @@ class Cart implements Arrayable
      */
     public function removeAt($cartItemIndex)
     {
+        $this->existenceCheckFor($cartItemIndex);
+
         $this->cartDriver->removeCartItem($this->items[$cartItemIndex]->id);
         $this->items = $this->items->forget($cartItemIndex)->values(); // To reset the index
 
         return $this->cartUpdates();
+    }
+
+    /**
+     * Throws an exception is the there is no item at the specified index
+     *
+     * @param int index of the item
+     * @return void
+     * @throws ItemMissing
+     */
+    protected function existenceCheckFor($cartItemIndex)
+    {
+        if (! $this->items->has($cartItemIndex)) {
+            throw new ItemMissing("There is not item in the cart at the specified index.");
+        }
     }
 
     /**
@@ -311,6 +328,8 @@ class Cart implements Arrayable
      */
     public function incrementQuantityAt($cartItemIndex)
     {
+        $this->existenceCheckFor($cartItemIndex);
+
         $this->items[$cartItemIndex]->quantity++;
 
         $this->cartDriver->setCartItemQuantity(
@@ -329,6 +348,8 @@ class Cart implements Arrayable
      */
     public function decrementQuantityAt($cartItemIndex)
     {
+        $this->existenceCheckFor($cartItemIndex);
+
         if ($this->items[$cartItemIndex]->quantity == 1) {
             return $this->removeAt($cartItemIndex);
         }
