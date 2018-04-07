@@ -83,17 +83,18 @@ class Cart implements Arrayable
      * Adds an item to the cart
      *
      * @param Illuminate\Database\Eloquent\Model
+     * @param int Quantity
      * @return array
      */
-    public function add($entity)
+    public function add($entity, $quantity)
     {
         if ($this->itemExists($entity)) {
             $cartItemIndex = $this->items->search($this->cartItemsCheck($entity));
 
-            return $this->incrementQuantityAt($cartItemIndex);
+            return $this->incrementQuantityAt($cartItemIndex, $quantity);
         }
 
-        $this->items->push(CartItem::createFrom($entity));
+        $this->items->push(CartItem::createFrom($entity, $quantity));
 
         return $this->cartUpdates($isNewItem = true);
     }
@@ -324,13 +325,14 @@ class Cart implements Arrayable
      * Increments the quantity of a cart item
      *
      * @param int Index of the cart item
+     * @param int quantity to be increased
      * @return array
      */
-    public function incrementQuantityAt($cartItemIndex)
+    public function incrementQuantityAt($cartItemIndex, $quantity = 1)
     {
         $this->existenceCheckFor($cartItemIndex);
 
-        $this->items[$cartItemIndex]->quantity++;
+        $this->items[$cartItemIndex]->quantity += $quantity;
 
         $this->cartDriver->setCartItemQuantity(
             $this->items[$cartItemIndex]->id,
@@ -341,20 +343,21 @@ class Cart implements Arrayable
     }
 
     /**
-     * Increments the quantity of a cart item
+     * Decrements the quantity of a cart item
      *
      * @param int Index of the cart item
+     * @param int quantity to be decreased
      * @return array
      */
-    public function decrementQuantityAt($cartItemIndex)
+    public function decrementQuantityAt($cartItemIndex, $quantity = 1)
     {
         $this->existenceCheckFor($cartItemIndex);
 
-        if ($this->items[$cartItemIndex]->quantity == 1) {
+        if ($this->items[$cartItemIndex]->quantity <= $quantity) {
             return $this->removeAt($cartItemIndex);
         }
 
-        $this->items[$cartItemIndex]->quantity--;
+        $this->items[$cartItemIndex]->quantity -= $quantity;
 
         $this->cartDriver->setCartItemQuantity(
             $this->items[$cartItemIndex]->id,

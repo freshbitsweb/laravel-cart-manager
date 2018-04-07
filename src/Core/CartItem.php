@@ -26,30 +26,33 @@ class CartItem implements Arrayable
      * Creates a new cart item
      *
      * @param Illuminate\Database\Eloquent\Model|array
+     * @param int Quantity of the item
      * @return \Freshbitsweb\CartManager\Core\CartItem
      */
-    public function __construct($entity)
+    public function __construct($data, $quantity)
     {
-        if (is_array($entity)) {
-            return $this->createFromArray($entity);
+        if (is_array($data)) {
+            return $this->createFromArray($data);
         }
 
-        return $this->createFromModel($entity);
+        return $this->createFromModel($data, $quantity);
     }
 
     /**
      * Creates a new cart item from a model instance
      *
      * @param Illuminate\Database\Eloquent\Model
+     * @param int Quantity of the item
      * @return \Freshbitsweb\CartManager\Core\CartItem
      */
-    protected function createFromModel($entity)
+    protected function createFromModel($entity, $quantity)
     {
         $this->modelType = get_class($entity);
         $this->modelId = $entity->{$entity->getKeyName()};
         $this->setName($entity);
         $this->setPrice($entity);
         $this->setImage($entity);
+        $this->quantity = $quantity;
 
         return $this;
     }
@@ -77,11 +80,12 @@ class CartItem implements Arrayable
      * Creates a new cart item from an array or entity
      *
      * @param Illuminate\Database\Eloquent\Model|array
+     * @param int Quantity of the item
      * @return \Freshbitsweb\CartManager\Core\CartItem
      */
-    public static function createFrom($array)
+    public static function createFrom($data, $quantity = 1)
     {
-        return new static($array);
+        return new static($data, $quantity);
     }
 
     /**
