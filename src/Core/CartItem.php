@@ -98,7 +98,7 @@ class CartItem implements Arrayable
             return;
         }
 
-        if (property_exists($entity, 'name')) {
+        if ($entity->offsetExists('name')) {
             $this->name = $entity->name;
             return;
         }
@@ -120,7 +120,7 @@ class CartItem implements Arrayable
             return;
         }
 
-        if (isset($entity->price)) {
+        if ($entity->offsetExists('price')) {
             $this->price = $entity->price;
             return;
         }
