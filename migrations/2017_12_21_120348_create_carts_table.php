@@ -15,7 +15,7 @@ class CreateCartsTable extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('cookie')->nullable();
+            $table->string('cookie');
             $table->integer('auth_user')->unsigned()->nullable();
             $table->decimal('subtotal', 8, 2);
             $table->decimal('discount', 8, 2);

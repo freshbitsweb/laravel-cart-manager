@@ -28,7 +28,6 @@ class DatabaseDriver implements CartDriver
         if (! $cartData && Auth::guard(config('cart_manager.auth_guard'))->check()) {
             $cartData = Cart::with($this->cartItemsQuery())
                 ->where($this->getCookieElement())
-                ->whereNotNull('cookie')
                 ->first($selectColumns)
             ;
 
@@ -166,7 +165,14 @@ class DatabaseDriver implements CartDriver
      */
     protected function getCookieElement()
     {
-        return ['cookie' => Cookie::get(config('cart_manager.cookie_name'))];
+        // We do not have cookie for API requests
+        if (app()->offsetExists('cart_manager_cookie')) {
+            $cookie = resolve('cart_manager_cookie');
+        } else {
+            $cookie = Cookie::get(config('cart_manager.cookie_name'));
+        }
+
+        return ['cookie' => $cookie];
     }
 
     /**
