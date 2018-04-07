@@ -28,6 +28,7 @@ class DatabaseDriver implements CartDriver
         if (! $cartData && Auth::guard(config('cart_manager.auth_guard'))->check()) {
             $cartData = Cart::with($this->cartItemsQuery())
                 ->where($this->getCookieElement())
+                ->whereNotNull('cookie')
                 ->first($selectColumns)
             ;
 
