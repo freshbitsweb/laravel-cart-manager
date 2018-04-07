@@ -262,13 +262,13 @@ class Cart implements Arrayable
         $cartData = [
             'subtotal' => $this->subtotal,
             'discount' => $this->discount,
-            'discount_percentage' => $this->discountPercentage,
-            'coupon_id' => $this->couponId,
-            'shipping_charges' => $this->shippingCharges,
-            'net_total' => $this->netTotal,
+            'discountPercentage' => $this->discountPercentage,
+            'couponId' => $this->couponId,
+            'shippingCharges' => $this->shippingCharges,
+            'netTotal' => $this->netTotal,
             'tax' => $this->tax,
             'total' => $this->total,
-            'round_off' => $this->roundOff,
+            'roundOff' => $this->roundOff,
             'payable' => $this->payable,
         ];
 
