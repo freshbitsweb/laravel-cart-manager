@@ -14,4 +14,22 @@ class CartItem extends Model
     protected $fillable = [
         'cart_id', 'model_type', 'model_id', 'name', 'price', 'image', 'quantity'
     ];
+
+    /**
+     * This method is put to convert snake case in camelCase
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return [
+            'id' => $this->id,
+            'modelType' => $this->model_type,
+            'modelId' => $this->model_id,
+            'name' => $this->name,
+            'price' => $this->price,
+            'image' => $this->image,
+            'quantity' => $this->quantity,
+        ];
+    }
 }

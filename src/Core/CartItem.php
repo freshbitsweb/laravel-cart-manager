@@ -63,8 +63,8 @@ class CartItem implements Arrayable
     protected function createFromArray($array)
     {
         $this->id = $array['id'];
-        $this->modelType = $array['model_type'];
-        $this->modelId = $array['model_id'];
+        $this->modelType = $array['modelType'];
+        $this->modelId = $array['modelId'];
         $this->name = $array['name'];
         $this->price = $array['price'];
         $this->image = $array['image'];
@@ -154,8 +154,8 @@ class CartItem implements Arrayable
     public function toArray()
     {
         $cartItemData = [
-            'model_type' => $this->modelType,
-            'model_id' => $this->modelId,
+            'modelType' => $this->modelType,
+            'modelId' => $this->modelId,
             'name' => $this->name,
             'price' => $this->price,
             'image' => $this->image,

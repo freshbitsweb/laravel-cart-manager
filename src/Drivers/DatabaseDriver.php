@@ -94,6 +94,8 @@ class DatabaseDriver implements CartDriver
      */
     public function updateCart($cartId, $cartData)
     {
+        $cartData = $this->arraySnakeCase($cartData);
+
         Cart::where('id', $cartId)->update($cartData);
     }
 
@@ -106,6 +108,8 @@ class DatabaseDriver implements CartDriver
      */
     public function addCartItem($cartId, $cartItem)
     {
+        $cartItem = $this->arraySnakeCase($cartItem);
+
         $cartItem['cart_id'] = $cartId;
         CartItem::create($cartItem);
     }
@@ -129,6 +133,8 @@ class DatabaseDriver implements CartDriver
      */
     protected function storeCartDetails($cartData)
     {
+        $cartData = $this->arraySnakeCase($cartData);
+
         $cart = Cart::updateOrCreate(
             $this->cartIdentifier(),
             array_merge($cartData, $this->getCookieElement())
@@ -186,5 +192,22 @@ class DatabaseDriver implements CartDriver
         if ($cart) {
             $cart->delete();
         }
+    }
+
+    /**
+     * Converts the keys of an array into snake case
+     *
+     * @param array
+     * @return array
+     */
+    private function arraySnakeCase($array)
+    {
+        $newArray = [];
+
+        foreach ($array as $key => $value) {
+            $newArray[snake_case($key)] = $value;
+        }
+
+        return $newArray;
     }
 }
