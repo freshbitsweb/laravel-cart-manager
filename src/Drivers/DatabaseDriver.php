@@ -13,17 +13,25 @@ class DatabaseDriver implements CartDriver
     /**
      * Returns current cart data
      *
-     * @return array
+     * @return Freshbitsweb\CartManager\Models\Cart
      */
     public function getCartData()
     {
         $selectColumns = ['id', 'subtotal', 'discount', 'discount_percentage', 'coupon_id', 'shipping_charges', 'net_total', 'tax', 'total', 'round_off', 'payable'];
 
-        $cartData = Cart::with($this->cartItemsQuery())->where($this->cartIdentifier())->first($selectColumns);
+        $cartData = Cart::with($this->cartItemsQuery())
+            ->where($this->cartIdentifier())
+            ->first($selectColumns)
+        ;
 
         // If there is no cart record for the logged in customer, try with cookie identifier
         if (! $cartData && Auth::guard(config('cart_manager.auth_guard'))->check()) {
-            if ($cartData = Cart::with($this->cartItemsQuery())->where($this->getCookieElement())->first($selectColumns)) {
+            $cartData = Cart::with($this->cartItemsQuery())
+                ->where($this->getCookieElement())
+                ->first($selectColumns)
+            ;
+
+            if ($cartData) {
                 $this->assignCustomerToCartRecord();
             }
         }

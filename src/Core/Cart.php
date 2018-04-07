@@ -316,7 +316,7 @@ class Cart implements Arrayable
     protected function existenceCheckFor($cartItemIndex)
     {
         if (! $this->items->has($cartItemIndex)) {
-            throw new ItemMissing("There is not item in the cart at the specified index.");
+            throw new ItemMissing("There is no item in the cart at the specified index.");
         }
     }
 
