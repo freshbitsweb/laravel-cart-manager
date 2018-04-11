@@ -274,11 +274,21 @@ class Cart implements Arrayable
         ];
 
         if ($withItems) {
-            // First toArray() for CartItem object and second one for the Illuminate Collection
-            $cartData['items'] = $this->items->map->toArray()->toArray();
+            $cartData['items'] = $this->items();
         }
 
         return $cartData;
+    }
+
+    /**
+     * Returns the cart items
+     *
+     * @return array
+     */
+    public function items()
+    {
+        // First toArray() for CartItem object and second one for the Illuminate Collection
+        return $this->items->map->toArray()->toArray();
     }
 
     /**
