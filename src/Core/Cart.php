@@ -447,4 +447,17 @@ class Cart implements Arrayable
 
         return $this->cartUpdates($isNewItem = false, $keepDiscount = true);
     }
+
+    /**
+     * Manually set the user id of the customer
+     *
+     * @param int User id
+     * @return void
+     */
+    public function setUser($userId)
+    {
+        app()->singleton('cart_auth_user_id', function () use ($userId) {
+            return $userId;
+        });
+    }
 }

@@ -150,6 +150,11 @@ class DatabaseDriver implements CartDriver
      */
     protected function cartIdentifier()
     {
+        // If auth user is set manually, use it
+        if (app()->offsetExists('cart_auth_user_id')) {
+            return ['auth_user' => resolve('cart_auth_user_id')];
+        }
+
         // If customer is logged in, use his identifier
         if (Auth::guard(config('cart_manager.auth_guard'))->check()) {
             return ['auth_user' => Auth::guard(config('cart_manager.auth_guard'))->id()];
@@ -165,9 +170,13 @@ class DatabaseDriver implements CartDriver
      */
     protected function getCookieElement()
     {
-        // We do not have cookie for API requests
-        if (app()->offsetExists('cart_manager_cookie')) {
-            $cookie = resolve('cart_manager_cookie');
+        if (! request()->hasCookie(config('cart_manager.cookie_name'))) {
+            $cookie = str_random(20);
+            Cookie::queue(Cookie::make(
+                config('cart_manager.cookie_name'),
+                $cookie,
+                config('cart_manager.cookie_lifetime')
+            ));
         } else {
             $cookie = Cookie::get(config('cart_manager.cookie_name'));
         }
