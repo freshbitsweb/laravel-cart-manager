@@ -1,12 +1,12 @@
 <?php
 
-namespace Freshbitsweb\CartManager;
+namespace Freshbitsweb\LaravelCartManager;
 
-use Freshbitsweb\CartManager\Contracts\CartDriver;
-use Freshbitsweb\CartManager\Core\Cart;
-use Freshbitsweb\CartManager\Observers\CartObserver;
-use Freshbitsweb\CartManager\Middlewares\AttachCartCookie;
-use Freshbitsweb\CartManager\Models\Cart as CartModel;
+use Freshbitsweb\LaravelCartManager\Contracts\CartDriver;
+use Freshbitsweb\LaravelCartManager\Core\Cart;
+use Freshbitsweb\LaravelCartManager\Observers\CartObserver;
+use Freshbitsweb\LaravelCartManager\Middlewares\AttachCartCookie;
+use Freshbitsweb\LaravelCartManager\Models\Cart as CartModel;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Support\ServiceProvider;
 

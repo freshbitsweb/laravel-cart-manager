@@ -1,10 +1,10 @@
 <?php
 
-namespace Freshbitsweb\CartManager\Drivers;
+namespace Freshbitsweb\LaravelCartManager\Drivers;
 
-use Freshbitsweb\CartManager\Contracts\CartDriver;
-use Freshbitsweb\CartManager\Models\Cart;
-use Freshbitsweb\CartManager\Models\CartItem;
+use Freshbitsweb\LaravelCartManager\Contracts\CartDriver;
+use Freshbitsweb\LaravelCartManager\Models\Cart;
+use Freshbitsweb\LaravelCartManager\Models\CartItem;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 
@@ -13,7 +13,7 @@ class DatabaseDriver implements CartDriver
     /**
      * Returns current cart data
      *
-     * @return Freshbitsweb\CartManager\Models\Cart
+     * @return Freshbitsweb\LaravelCartManager\Models\Cart
      */
     public function getCartData()
     {

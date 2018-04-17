@@ -1,6 +1,6 @@
 <?php
 
-namespace Freshbitsweb\CartManager\Exceptions;
+namespace Freshbitsweb\LaravelCartManager\Exceptions;
 
 use Exception;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace Freshbitsweb\CartManager\Core;
+namespace Freshbitsweb\LaravelCartManager\Core;
 
-use Freshbitsweb\CartManager\Exceptions\ItemNameMissing;
-use Freshbitsweb\CartManager\Exceptions\ItemPriceMissing;
+use Freshbitsweb\LaravelCartManager\Exceptions\ItemNameMissing;
+use Freshbitsweb\LaravelCartManager\Exceptions\ItemPriceMissing;
 use Illuminate\Contracts\Support\Arrayable;
 
 class CartItem implements Arrayable
@@ -27,7 +27,7 @@ class CartItem implements Arrayable
      *
      * @param Illuminate\Database\Eloquent\Model|array
      * @param int Quantity of the item
-     * @return \Freshbitsweb\CartManager\Core\CartItem
+     * @return \Freshbitsweb\LaravelCartManager\Core\CartItem
      */
     public function __construct($data, $quantity)
     {
@@ -43,7 +43,7 @@ class CartItem implements Arrayable
      *
      * @param Illuminate\Database\Eloquent\Model
      * @param int Quantity of the item
-     * @return \Freshbitsweb\CartManager\Core\CartItem
+     * @return \Freshbitsweb\LaravelCartManager\Core\CartItem
      */
     protected function createFromModel($entity, $quantity)
     {
@@ -61,7 +61,7 @@ class CartItem implements Arrayable
      * Creates a new cart item from an array
      *
      * @param array
-     * @return \Freshbitsweb\CartManager\Core\CartItem
+     * @return \Freshbitsweb\LaravelCartManager\Core\CartItem
      */
     protected function createFromArray($array)
     {
@@ -81,7 +81,7 @@ class CartItem implements Arrayable
      *
      * @param Illuminate\Database\Eloquent\Model|array
      * @param int Quantity of the item
-     * @return \Freshbitsweb\CartManager\Core\CartItem
+     * @return \Freshbitsweb\LaravelCartManager\Core\CartItem
      */
     public static function createFrom($data, $quantity = 1)
     {

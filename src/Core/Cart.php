@@ -1,11 +1,11 @@
 <?php
 
-namespace Freshbitsweb\CartManager\Core;
+namespace Freshbitsweb\LaravelCartManager\Core;
 
 use BadMethodCallException;
-use Freshbitsweb\CartManager\Contracts\CartDriver;
-use Freshbitsweb\CartManager\Exceptions\IncorrectDiscount;
-use Freshbitsweb\CartManager\Exceptions\ItemMissing;
+use Freshbitsweb\LaravelCartManager\Contracts\CartDriver;
+use Freshbitsweb\LaravelCartManager\Exceptions\IncorrectDiscount;
+use Freshbitsweb\LaravelCartManager\Exceptions\ItemMissing;
 use Illuminate\Contracts\Support\Arrayable;
 
 class Cart implements Arrayable

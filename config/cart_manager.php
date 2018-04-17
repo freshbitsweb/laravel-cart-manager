@@ -2,7 +2,7 @@
 
 return [
     // The driver that should be used to manage the cart (database/session/custom)
-    'driver' => Freshbitsweb\CartManager\Drivers\DatabaseDriver::class,
+    'driver' => Freshbitsweb\LaravelCartManager\Drivers\DatabaseDriver::class,
 
     // The authentication guard that should be used to identify the logged in customer
     'auth_guard' => 'web',

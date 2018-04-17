@@ -1,5 +1,5 @@
 {
-    "name": "freshbitsweb/cart-manager",
+    "name": "freshbitsweb/laravel-cart-manager",
     "description": "Managing the cart of your Laravel application is a breeze",
     "require": {
         "php": ">=7.0",
@@ -14,7 +14,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Freshbitsweb\\CartManager\\": "src/"
+            "Freshbitsweb\\LaravelCartManager\\": "src/"
         },
         "files": [
             "src/helpers.php"
@@ -23,7 +23,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Freshbitsweb\\CartManager\\CartManagerServiceProvider"
+                "Freshbitsweb\\LaravelCartManager\\CartManagerServiceProvider"
             ]
         }
     },
