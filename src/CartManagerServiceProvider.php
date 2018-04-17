@@ -24,8 +24,9 @@ class CartManagerServiceProvider extends ServiceProvider
             __DIR__.'/../config/cart_manager.php' => config_path('cart_manager.php'),
         ], 'cart-manager-config');
 
-        // Migration files path
-        $this->loadMigrationsFrom(__DIR__.'/../migrations');
+        $this->publishes([
+            __DIR__.'/../migrations/' => database_path('migrations')
+        ], 'cart-manager-migrations');
 
         CartModel::observe(CartObserver::class);
     }
