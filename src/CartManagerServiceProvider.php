@@ -22,11 +22,11 @@ class CartManagerServiceProvider extends ServiceProvider
         // Publish config file
         $this->publishes([
             __DIR__.'/../config/cart_manager.php' => config_path('cart_manager.php'),
-        ], 'cart-manager-config');
+        ], 'laravel-cart-manager-config');
 
         $this->publishes([
             __DIR__.'/../migrations/' => database_path('migrations')
-        ], 'cart-manager-migrations');
+        ], 'laravel-cart-manager-migrations');
 
         CartModel::observe(CartObserver::class);
     }
