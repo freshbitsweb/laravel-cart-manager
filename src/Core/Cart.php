@@ -3,10 +3,10 @@
 namespace Freshbitsweb\LaravelCartManager\Core;
 
 use BadMethodCallException;
-use Freshbitsweb\LaravelCartManager\Contracts\CartDriver;
-use Freshbitsweb\LaravelCartManager\Exceptions\IncorrectDiscount;
-use Freshbitsweb\LaravelCartManager\Exceptions\ItemMissing;
 use Illuminate\Contracts\Support\Arrayable;
+use Freshbitsweb\LaravelCartManager\Contracts\CartDriver;
+use Freshbitsweb\LaravelCartManager\Exceptions\ItemMissing;
+use Freshbitsweb\LaravelCartManager\Exceptions\IncorrectDiscount;
 
 class Cart implements Arrayable
 {
@@ -37,7 +37,7 @@ class Cart implements Arrayable
     protected $payable = 0;
 
     /**
-     * Sets object properties
+     * Sets object properties.
      *
      * @return void
      */
@@ -54,7 +54,7 @@ class Cart implements Arrayable
     }
 
     /**
-     * Sets the object properties from the provided data
+     * Sets the object properties from the provided data.
      *
      * @param array Cart attributes
      * @return void
@@ -67,7 +67,7 @@ class Cart implements Arrayable
     }
 
     /**
-     * Creates CartItem objects from the data
+     * Creates CartItem objects from the data.
      *
      * @param array Cart items data
      * @return void
@@ -80,7 +80,7 @@ class Cart implements Arrayable
     }
 
     /**
-     * Adds an item to the cart
+     * Adds an item to the cart.
      *
      * @param Illuminate\Database\Eloquent\Model
      * @param int Quantity
@@ -100,10 +100,10 @@ class Cart implements Arrayable
     }
 
     /**
-     * Performs cart updates and returns the data
+     * Performs cart updates and returns the data.
      *
-     * @param boolean Weather its a new item or existing
-     * @param boolean Weather to keep the discount in the cart
+     * @param bool Weather its a new item or existing
+     * @param bool Weather to keep the discount in the cart
      * @return array
      */
     protected function cartUpdates($isNewItem = false, $keepDiscount = false)
@@ -116,10 +116,10 @@ class Cart implements Arrayable
     }
 
     /**
-     * Checks if an item already exists in the cart
+     * Checks if an item already exists in the cart.
      *
      * @param Illuminate\Database\Eloquent\Model
-     * @return boolean
+     * @return bool
      */
     protected function itemExists($entity)
     {
@@ -127,7 +127,7 @@ class Cart implements Arrayable
     }
 
     /**
-     * Checks if a cart item with the specified entity already exists
+     * Checks if a cart item with the specified entity already exists.
      *
      * @param Illuminate\Database\Eloquent\Model
      * @return \Closure
@@ -142,9 +142,9 @@ class Cart implements Arrayable
     }
 
     /**
-     * Sets the total variables of the object
+     * Sets the total variables of the object.
      *
-     * @param boolean Weather to keep the discount in the cart
+     * @param bool Weather to keep the discount in the cart
      * @return void
      */
     protected function updateTotals($keepDiscount = false)
@@ -168,7 +168,7 @@ class Cart implements Arrayable
     }
 
     /**
-     * Sets the subtotal of the cart
+     * Sets the subtotal of the cart.
      *
      * @return void
      */
@@ -180,7 +180,7 @@ class Cart implements Arrayable
     }
 
     /**
-     * Sets the shipping charges of the cart
+     * Sets the shipping charges of the cart.
      *
      * @return void
      */
@@ -199,7 +199,7 @@ class Cart implements Arrayable
     }
 
     /**
-     * Sets the payable and round off amount of the cart
+     * Sets the payable and round off amount of the cart.
      *
      * @return void
      */
@@ -232,9 +232,9 @@ class Cart implements Arrayable
     }
 
     /**
-     * Stores the cart data on the cart driver
+     * Stores the cart data on the cart driver.
      *
-     * @param boolean Weather its a new item or existing
+     * @param bool Weather its a new item or existing
      * @return void
      */
     protected function storeCartData($isNewItem = false)
@@ -253,9 +253,9 @@ class Cart implements Arrayable
     }
 
     /**
-     * Returns object properties as array
+     * Returns object properties as array.
      *
-     * @param boolean Weather items should also be covered
+     * @param bool Weather items should also be covered
      * @return array
      */
     public function toArray($withItems = true)
@@ -281,7 +281,7 @@ class Cart implements Arrayable
     }
 
     /**
-     * Returns the cart items
+     * Returns the cart items.
      *
      * @return array
      */
@@ -292,7 +292,7 @@ class Cart implements Arrayable
     }
 
     /**
-     * Returns the cart data without items
+     * Returns the cart data without items.
      *
      * @return array
      */
@@ -302,7 +302,7 @@ class Cart implements Arrayable
     }
 
     /**
-     * Removes an item from the cart
+     * Removes an item from the cart.
      *
      * @param int index of the item
      * @return array
@@ -318,7 +318,7 @@ class Cart implements Arrayable
     }
 
     /**
-     * Throws an exception is the there is no item at the specified index
+     * Throws an exception is the there is no item at the specified index.
      *
      * @param int index of the item
      * @return void
@@ -327,12 +327,12 @@ class Cart implements Arrayable
     protected function existenceCheckFor($cartItemIndex)
     {
         if (! $this->items->has($cartItemIndex)) {
-            throw new ItemMissing("There is no item in the cart at the specified index.");
+            throw new ItemMissing('There is no item in the cart at the specified index.');
         }
     }
 
     /**
-     * Increments the quantity of a cart item
+     * Increments the quantity of a cart item.
      *
      * @param int Index of the cart item
      * @param int quantity to be increased
@@ -353,7 +353,7 @@ class Cart implements Arrayable
     }
 
     /**
-     * Decrements the quantity of a cart item
+     * Decrements the quantity of a cart item.
      *
      * @param int Index of the cart item
      * @param int quantity to be decreased
@@ -378,7 +378,7 @@ class Cart implements Arrayable
     }
 
     /**
-     * Clears the cart details from the cart driver
+     * Clears the cart details from the cart driver.
      *
      * @return void
      */
@@ -388,7 +388,7 @@ class Cart implements Arrayable
     }
 
     /**
-     * Serves as a getter for cart properties
+     * Serves as a getter for cart properties.
      *
      * @param string Method name
      * @param array Arguments
@@ -407,17 +407,17 @@ class Cart implements Arrayable
     }
 
     /**
-     * Applies disount to the cart
+     * Applies disount to the cart.
      *
-     * @param double Discount Percentage
+     * @param float Discount Percentage
      * @param int Coupon id
      * @return array
      * @throws IncorrectDiscount
      */
-    public function applyDiscount($percentage, $couponId = NULL)
+    public function applyDiscount($percentage, $couponId = null)
     {
         if ($this->subtotal == 0) {
-            throw new IncorrectDiscount("Discount cannot be applied on an empty cart");
+            throw new IncorrectDiscount('Discount cannot be applied on an empty cart');
         }
 
         $this->discountPercentage = $percentage;
@@ -428,9 +428,9 @@ class Cart implements Arrayable
     }
 
     /**
-     * Applies flat disount to the cart
+     * Applies flat disount to the cart.
      *
-     * @param double Discount amount
+     * @param float Discount amount
      * @param int Coupon id
      * @return array
      * @throws IncorrectDiscount
@@ -438,7 +438,7 @@ class Cart implements Arrayable
     public function applyFlatDiscount($amount, $couponId = null)
     {
         if ($amount > $this->subtotal) {
-            throw new IncorrectDiscount("The discount amount cannot be more that subtotal of the cart");
+            throw new IncorrectDiscount('The discount amount cannot be more that subtotal of the cart');
         }
 
         $this->discount = round($amount, 2);
@@ -449,7 +449,7 @@ class Cart implements Arrayable
     }
 
     /**
-     * Manually set the user id of the customer
+     * Manually set the user id of the customer.
      *
      * @param int User id
      * @return void

@@ -7,7 +7,7 @@ use Freshbitsweb\LaravelCartManager\Core\Cart;
 trait Cartable
 {
     /**
-     * Adds an item to the cart
+     * Adds an item to the cart.
      *
      * @param int Identifier
      * @param int quantity

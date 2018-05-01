@@ -12,11 +12,11 @@ class CartItem extends Model
      * @var array
      */
     protected $fillable = [
-        'cart_id', 'model_type', 'model_id', 'name', 'price', 'image', 'quantity'
+        'cart_id', 'model_type', 'model_id', 'name', 'price', 'image', 'quantity',
     ];
 
     /**
-     * This method is put to convert snake case in camelCase
+     * This method is put to convert snake case in camelCase.
      *
      * @return array
      */

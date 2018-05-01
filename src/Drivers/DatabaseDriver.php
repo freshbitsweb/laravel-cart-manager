@@ -2,16 +2,16 @@
 
 namespace Freshbitsweb\LaravelCartManager\Drivers;
 
-use Freshbitsweb\LaravelCartManager\Contracts\CartDriver;
-use Freshbitsweb\LaravelCartManager\Models\Cart;
-use Freshbitsweb\LaravelCartManager\Models\CartItem;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
+use Freshbitsweb\LaravelCartManager\Models\Cart;
+use Freshbitsweb\LaravelCartManager\Models\CartItem;
+use Freshbitsweb\LaravelCartManager\Contracts\CartDriver;
 
 class DatabaseDriver implements CartDriver
 {
     /**
-     * Returns current cart data
+     * Returns current cart data.
      *
      * @return Freshbitsweb\LaravelCartManager\Models\Cart
      */
@@ -40,23 +40,23 @@ class DatabaseDriver implements CartDriver
     }
 
     /**
-     * Returns the query to fetch cart items
+     * Returns the query to fetch cart items.
      *
      * @return array
      */
     protected function cartItemsQuery()
     {
         return [
-            'items' => function($query) {
+            'items' => function ($query) {
                 $query->select('id', 'cart_id', 'model_type', 'model_id', 'name', 'price', 'image', 'quantity')
                     ->orderBy('id', 'asc')
                 ;
-            }
+            },
         ];
     }
 
     /**
-     * Assigns the customer to the cart record identified by cookie
+     * Assigns the customer to the cart record identified by cookie.
      *
      * @return void
      */
@@ -64,12 +64,12 @@ class DatabaseDriver implements CartDriver
     {
         // Assign the logged in customer to the cart record
         Cart::where($this->getCookieElement())->update([
-            'auth_user' => Auth::guard(config('cart_manager.auth_guard'))->id()
+            'auth_user' => Auth::guard(config('cart_manager.auth_guard'))->id(),
         ]);
     }
 
     /**
-     * Stores the cart and cart items data in the database tables
+     * Stores the cart and cart items data in the database tables.
      *
      * @param array Cart data
      * @return void
@@ -80,13 +80,13 @@ class DatabaseDriver implements CartDriver
         unset($cartData['items']);
         $cartId = $this->storeCartDetails($cartData);
 
-        foreach($cartItems as $cartItem) {
+        foreach ($cartItems as $cartItem) {
             $this->addCartItem($cartId, $cartItem);
         }
     }
 
     /**
-     * Updates the cart record with the new data
+     * Updates the cart record with the new data.
      *
      * @param int Id of the cart
      * @param array Cart data
@@ -100,7 +100,7 @@ class DatabaseDriver implements CartDriver
     }
 
     /**
-     * Add a new cart item to the database
+     * Add a new cart item to the database.
      *
      * @param int Cart id
      * @param array Cart item data
@@ -115,7 +115,7 @@ class DatabaseDriver implements CartDriver
     }
 
     /**
-     * Removes a cart item from the database
+     * Removes a cart item from the database.
      *
      * @param int Cart item id
      * @return void
@@ -126,7 +126,7 @@ class DatabaseDriver implements CartDriver
     }
 
     /**
-     * Stores the cart data in the database table and returns the id of the record
+     * Stores the cart data in the database table and returns the id of the record.
      *
      * @param array Cart data
      * @return int
@@ -144,7 +144,7 @@ class DatabaseDriver implements CartDriver
     }
 
     /**
-     * Returns the cart identifier
+     * Returns the cart identifier.
      *
      * @return array
      */
@@ -164,7 +164,7 @@ class DatabaseDriver implements CartDriver
     }
 
     /**
-     * Returns the cookie for the cart identification
+     * Returns the cookie for the cart identification.
      *
      * @return array
      */
@@ -185,7 +185,7 @@ class DatabaseDriver implements CartDriver
     }
 
     /**
-     * Updates the quantity in the cart items table
+     * Updates the quantity in the cart items table.
      *
      * @param int Id of the cart item
      * @param int quantity of the cart item
@@ -197,7 +197,7 @@ class DatabaseDriver implements CartDriver
     }
 
     /**
-     * Clears the cart details from the database
+     * Clears the cart details from the database.
      *
      * @return void
      */
@@ -211,7 +211,7 @@ class DatabaseDriver implements CartDriver
     }
 
     /**
-     * Converts the keys of an array into snake case
+     * Converts the keys of an array into snake case.
      *
      * @param array
      * @return array
