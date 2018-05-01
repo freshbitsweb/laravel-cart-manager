@@ -17,7 +17,7 @@ class Cart extends Model
     ];
 
     /**
-     * Get the items of the cart
+     * Get the items of the cart.
      */
     public function items()
     {

@@ -2,9 +2,9 @@
 
 namespace Freshbitsweb\LaravelCartManager\Core;
 
+use Illuminate\Contracts\Support\Arrayable;
 use Freshbitsweb\LaravelCartManager\Exceptions\ItemNameMissing;
 use Freshbitsweb\LaravelCartManager\Exceptions\ItemPriceMissing;
-use Illuminate\Contracts\Support\Arrayable;
 
 class CartItem implements Arrayable
 {
@@ -23,7 +23,7 @@ class CartItem implements Arrayable
     public $quantity = 1;
 
     /**
-     * Creates a new cart item
+     * Creates a new cart item.
      *
      * @param Illuminate\Database\Eloquent\Model|array
      * @param int Quantity of the item
@@ -39,7 +39,7 @@ class CartItem implements Arrayable
     }
 
     /**
-     * Creates a new cart item from a model instance
+     * Creates a new cart item from a model instance.
      *
      * @param Illuminate\Database\Eloquent\Model
      * @param int Quantity of the item
@@ -58,7 +58,7 @@ class CartItem implements Arrayable
     }
 
     /**
-     * Creates a new cart item from an array
+     * Creates a new cart item from an array.
      *
      * @param array
      * @return \Freshbitsweb\LaravelCartManager\Core\CartItem
@@ -77,7 +77,7 @@ class CartItem implements Arrayable
     }
 
     /**
-     * Creates a new cart item from an array or entity
+     * Creates a new cart item from an array or entity.
      *
      * @param Illuminate\Database\Eloquent\Model|array
      * @param int Quantity of the item
@@ -89,7 +89,7 @@ class CartItem implements Arrayable
     }
 
     /**
-     * Sets the name of the item
+     * Sets the name of the item.
      *
      * @param Illuminate\Database\Eloquent\Model
      * @return void
@@ -99,11 +99,13 @@ class CartItem implements Arrayable
     {
         if (method_exists($entity, 'getName')) {
             $this->name = $entity->getName();
+
             return;
         }
 
         if ($entity->offsetExists('name')) {
             $this->name = $entity->name;
+
             return;
         }
 
@@ -111,7 +113,7 @@ class CartItem implements Arrayable
     }
 
     /**
-     * Sets the price of the item
+     * Sets the price of the item.
      *
      * @param Illuminate\Database\Eloquent\Model
      * @return void
@@ -121,11 +123,13 @@ class CartItem implements Arrayable
     {
         if (method_exists($entity, 'getPrice')) {
             $this->price = $entity->getPrice();
+
             return;
         }
 
         if ($entity->offsetExists('price')) {
             $this->price = $entity->price;
+
             return;
         }
 
@@ -133,7 +137,7 @@ class CartItem implements Arrayable
     }
 
     /**
-     * Sets the image of the item
+     * Sets the image of the item.
      *
      * @param Illuminate\Database\Eloquent\Model
      * @return void
@@ -142,6 +146,7 @@ class CartItem implements Arrayable
     {
         if (method_exists($entity, 'getImage')) {
             $this->image = $entity->getImage();
+
             return;
         }
 
@@ -151,7 +156,7 @@ class CartItem implements Arrayable
     }
 
     /**
-     * Returns object properties as array
+     * Returns object properties as array.
      *
      * @return array
      */
