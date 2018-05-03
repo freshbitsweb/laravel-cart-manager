@@ -234,7 +234,7 @@ class Cart implements Arrayable
     /**
      * Stores the cart data on the cart driver.
      *
-     * @param bool Weather its a new item or existing
+     * @param bool Weather its a new item or an existing one
      * @return void
      */
     protected function storeCartData($isNewItem = false)
@@ -459,5 +459,37 @@ class Cart implements Arrayable
         app()->singleton('cart_auth_user_id', function () use ($userId) {
             return $userId;
         });
+    }
+
+    /**
+     * Refreshes all items data.
+     *
+     * @return array
+     */
+    public function refreshAllItemsData()
+    {
+        $keepDiscount = true;
+
+        $this->items->transform(function ($item) use (&$keepDiscount) {
+            $freshEntity = $item->modelType::findOrFail($item->modelId);
+
+            $cartItem = CartItem::createFrom($freshEntity, $item->quantity);
+
+            if ($cartItem->price != $item->price) {
+                $keepDiscount = false;
+            }
+
+            $item->name = $cartItem->name;
+            $item->price = $cartItem->price;
+            $item->image = $cartItem->image;
+
+            return $item;
+        });
+        $this->cartDriver->updateItemsData($this->items);
+
+        $this->updateTotals($keepDiscount);
+        $this->cartDriver->updateCart($this->id, $this->data());
+
+        return $this->toArray();
     }
 }

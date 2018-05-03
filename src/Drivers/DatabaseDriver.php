@@ -226,4 +226,21 @@ class DatabaseDriver implements CartDriver
 
         return $newArray;
     }
+
+    /**
+     * Updates the quantity in the cart items table.
+     *
+     * @param \Illuminate\Support\Collection Cart items
+     * @return void
+     */
+    public function updateItemsData($items)
+    {
+        $items->each(function ($item) {
+            CartItem::where('id', $item->id)->update([
+                'name' => $item->name,
+                'price' => $item->price,
+                'image' => $item->image,
+            ]);
+        });
+    }
 }
