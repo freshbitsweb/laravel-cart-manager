@@ -492,4 +492,14 @@ class Cart implements Arrayable
 
         return $this->toArray();
     }
+
+    /**
+     * Returns whether cart is empty or not
+     *
+     * @return bool
+     */
+    public function isEmpty()
+    {
+        return $this->items->isEmpty();
+    }
 }
