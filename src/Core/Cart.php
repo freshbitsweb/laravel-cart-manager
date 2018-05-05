@@ -494,7 +494,7 @@ class Cart implements Arrayable
     }
 
     /**
-     * Returns whether cart is empty or not
+     * Returns whether cart is empty or not.
      *
      * @return bool
      */
