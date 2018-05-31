@@ -4,6 +4,7 @@ namespace Freshbitsweb\LaravelCartManager\Test;
 
 use Orchestra\Testbench\TestCase as Orchestra;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Freshbitsweb\LaravelCartManager\Test\Support\TestProduct;
 
 abstract class TestCase extends Orchestra
 {
@@ -48,5 +49,18 @@ abstract class TestCase extends Orchestra
             'database' => ':memory:',
             'prefix' => '',
         ]);
+    }
+
+    /**
+     * Adds an item to the cart.
+     *
+     * @param int Quantity of the item
+     * @return array Cart data
+     */
+    protected function addACartItem($quantity = 1)
+    {
+        $testProduct = factory(TestProduct::class)->create();
+
+        return TestProduct::addToCart($testProduct->id, $quantity);
     }
 }
