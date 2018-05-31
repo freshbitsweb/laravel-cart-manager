@@ -4,12 +4,12 @@ namespace Freshbitsweb\LaravelCartManager\Core;
 
 use BadMethodCallException;
 use Illuminate\Contracts\Support\Arrayable;
-use Freshbitsweb\LaravelCartManager\Events\CartCreated;
 use Freshbitsweb\LaravelCartManager\Events\CartCleared;
-use Freshbitsweb\LaravelCartManager\Events\CartItemAdded;
+use Freshbitsweb\LaravelCartManager\Events\CartCreated;
 use Freshbitsweb\LaravelCartManager\Contracts\CartDriver;
-use Freshbitsweb\LaravelCartManager\Events\DiscountApplied;
+use Freshbitsweb\LaravelCartManager\Events\CartItemAdded;
 use Freshbitsweb\LaravelCartManager\Events\CartItemRemoved;
+use Freshbitsweb\LaravelCartManager\Events\DiscountApplied;
 use Freshbitsweb\LaravelCartManager\Exceptions\ItemMissing;
 use Freshbitsweb\LaravelCartManager\Exceptions\IncorrectDiscount;
 
