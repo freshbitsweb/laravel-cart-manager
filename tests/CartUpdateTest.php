@@ -55,9 +55,39 @@ class CartUpdateTest extends TestCase
     /** @test */
     public function remove_an_item_from_cart()
     {
-        $cart = $this->addACartItem();
+        $this->addACartItem();
 
         $cart = cart()->removeAt(0);
+
+        $this->assertCount(0, $cart['items']);
+    }
+
+    /** @test */
+    public function increment_cart_item_quantity()
+    {
+        $this->addACartItem();
+
+        $cart = cart()->incrementQuantityAt(0);
+
+        $this->assertSame(2, $cart['items'][0]['quantity']);
+    }
+
+    /** @test */
+    public function decrement_cart_item_quantity()
+    {
+        $this->addACartItem($quantity = 3);
+
+        $cart = cart()->decrementQuantityAt(0);
+
+        $this->assertSame(2, $cart['items'][0]['quantity']);
+    }
+
+    /** @test */
+    public function remove_cart_item_on_decrement_last_quantity()
+    {
+        $this->addACartItem();
+
+        $cart = cart()->decrementQuantityAt(0);
 
         $this->assertCount(0, $cart['items']);
     }
