@@ -5,6 +5,7 @@ namespace Freshbitsweb\LaravelCartManager\Core;
 use BadMethodCallException;
 use Illuminate\Contracts\Support\Arrayable;
 use Freshbitsweb\LaravelCartManager\Events\CartCreated;
+use Freshbitsweb\LaravelCartManager\Events\CartCleared;
 use Freshbitsweb\LaravelCartManager\Events\CartItemAdded;
 use Freshbitsweb\LaravelCartManager\Contracts\CartDriver;
 use Freshbitsweb\LaravelCartManager\Events\CartItemRemoved;
@@ -397,6 +398,8 @@ class Cart implements Arrayable
     public function clear()
     {
         $this->cartDriver->clearData();
+
+        event(new CartCleared);
     }
 
     /**
