@@ -5,6 +5,7 @@ namespace Freshbitsweb\LaravelCartManager\Core;
 use BadMethodCallException;
 use Illuminate\Contracts\Support\Arrayable;
 use Freshbitsweb\LaravelCartManager\Events\CartCreated;
+use Freshbitsweb\LaravelCartManager\Events\CartItemAdded;
 use Freshbitsweb\LaravelCartManager\Contracts\CartDriver;
 use Freshbitsweb\LaravelCartManager\Exceptions\ItemMissing;
 use Freshbitsweb\LaravelCartManager\Exceptions\IncorrectDiscount;
@@ -96,6 +97,8 @@ class Cart implements Arrayable
         }
 
         $this->items->push(CartItem::createFrom($entity, $quantity));
+
+        event(new CartItemAdded($entity));
 
         return $this->cartUpdates($isNewItem = true);
     }
