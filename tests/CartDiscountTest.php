@@ -2,7 +2,6 @@
 
 namespace Freshbitsweb\LaravelCartManager\Test;
 
-use Freshbitsweb\LaravelCartManager\Test\Support\TestProduct;
 use Freshbitsweb\LaravelCartManager\Exceptions\IncorrectDiscount;
 
 class CartDiscountTest extends TestCase
@@ -18,7 +17,7 @@ class CartDiscountTest extends TestCase
     public function apply_percentage_discount_on_the_cart()
     {
         $this->addACartItem($quantity = 1, [
-            'price' => 20
+            'price' => 20,
         ]);
 
         $cart = cart()->applyDiscount(10);
@@ -31,7 +30,7 @@ class CartDiscountTest extends TestCase
     public function apply_flat_discount_on_the_cart()
     {
         $this->addACartItem($quantity = 1, [
-            'price' => 20
+            'price' => 20,
         ]);
 
         $cart = cart()->applyFlatDiscount(2);

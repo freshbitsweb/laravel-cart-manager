@@ -17,8 +17,8 @@ abstract class TestCase extends Orchestra
     {
         parent::setUp();
 
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
-        $this->loadMigrationsFrom(__DIR__ . '/Support/database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/Support/database/migrations');
         $this->withFactories(__DIR__.'/Support/database/factories');
 
         // As tests are not http requests and do not read cookies
