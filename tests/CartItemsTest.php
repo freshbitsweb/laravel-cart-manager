@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Freshbitsweb\LaravelCartManager\Exceptions\ItemMissing;
 use Freshbitsweb\LaravelCartManager\Test\Support\TestProduct;
 
-class CartUpdateTest extends TestCase
+class CartItemsTest extends TestCase
 {
     /** @test */
     public function do_not_allow_non_existing_cart_item()
