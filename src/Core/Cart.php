@@ -7,6 +7,7 @@ use Illuminate\Contracts\Support\Arrayable;
 use Freshbitsweb\LaravelCartManager\Events\CartCreated;
 use Freshbitsweb\LaravelCartManager\Events\CartItemAdded;
 use Freshbitsweb\LaravelCartManager\Contracts\CartDriver;
+use Freshbitsweb\LaravelCartManager\Events\CartItemRemoved;
 use Freshbitsweb\LaravelCartManager\Exceptions\ItemMissing;
 use Freshbitsweb\LaravelCartManager\Exceptions\IncorrectDiscount;
 
@@ -316,8 +317,14 @@ class Cart implements Arrayable
     {
         $this->existenceCheckFor($cartItemIndex);
 
-        $this->cartDriver->removeCartItem($this->items[$cartItemIndex]->id);
+        $item = $this->items[$cartItemIndex];
+
+        $this->cartDriver->removeCartItem($item->id);
         $this->items = $this->items->forget($cartItemIndex)->values(); // To reset the index
+
+        $modelType = $item->modelType;
+        $entity = $modelType::find($item->modelId);
+        event(new CartItemRemoved($entity));
 
         return $this->cartUpdates();
     }

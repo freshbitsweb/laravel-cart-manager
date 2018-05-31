@@ -4,8 +4,9 @@ namespace Freshbitsweb\LaravelCartManager\Test;
 
 use Illuminate\Support\Facades\Event;
 use Freshbitsweb\LaravelCartManager\Events\CartCreated;
-use Freshbitsweb\LaravelCartManager\Test\Support\TestProduct;
 use Freshbitsweb\LaravelCartManager\Events\CartItemAdded;
+use Freshbitsweb\LaravelCartManager\Events\CartItemRemoved;
+use Freshbitsweb\LaravelCartManager\Test\Support\TestProduct;
 
 class CartEventsTest extends TestCase
 {
@@ -34,6 +35,19 @@ class CartEventsTest extends TestCase
         TestProduct::addToCart($testProduct->id);
 
         Event::assertDispatched(CartItemAdded::class, function ($e) use ($testProduct) {
+            return $e->entity->id === $testProduct->id;
+        });
+    }
+
+    /** @test */
+    public function fire_cart_item_removed_event()
+    {
+        $testProduct = factory(TestProduct::class)->create();
+        TestProduct::addToCart($testProduct->id);
+
+        cart()->removeAt(0);
+
+        Event::assertDispatched(CartItemRemoved::class, function ($e) use ($testProduct) {
             return $e->entity->id === $testProduct->id;
         });
     }
