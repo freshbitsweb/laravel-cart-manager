@@ -4,6 +4,7 @@ namespace Freshbitsweb\LaravelCartManager\Core;
 
 use BadMethodCallException;
 use Illuminate\Contracts\Support\Arrayable;
+use Freshbitsweb\LaravelCartManager\Events\CartCreated;
 use Freshbitsweb\LaravelCartManager\Contracts\CartDriver;
 use Freshbitsweb\LaravelCartManager\Exceptions\ItemMissing;
 use Freshbitsweb\LaravelCartManager\Exceptions\IncorrectDiscount;
@@ -249,6 +250,7 @@ class Cart implements Arrayable
             return;
         }
 
+        event(new CartCreated($this->toArray()));
         $this->cartDriver->storeNewCartData($this->toArray());
     }
 
