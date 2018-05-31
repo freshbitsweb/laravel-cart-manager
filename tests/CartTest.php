@@ -20,7 +20,7 @@ class CartTest extends TestCase
     public function totals_of_the_cart()
     {
         $this->addACartItem($quantity = 2, [
-            'price' => 10
+            'price' => 10,
         ]);
 
         cart()->applyDiscount(10);
@@ -30,17 +30,17 @@ class CartTest extends TestCase
         $this->assertSame(2, (int) cart()->getDiscount());
         $this->assertSame(10, (int) cart()->getShippingCharges());
         $this->assertSame(28, (int) cart()->getNetTotal());
-        $this->assertSame(1.68, (double) cart()->getTax());
-        $this->assertSame(29.68, (double) cart()->getTotal());
-        $this->assertSame(0.02, (double) cart()->getRoundOff());
-        $this->assertSame(29.7, (double) cart()->getPayable());
+        $this->assertSame(1.68, (float) cart()->getTax());
+        $this->assertSame(29.68, (float) cart()->getTotal());
+        $this->assertSame(0.02, (float) cart()->getRoundOff());
+        $this->assertSame(29.7, (float) cart()->getPayable());
     }
 
     /** @test */
     public function update_of_new_item_values()
     {
         $this->addACartItem($quantity = 1, [
-            'price' => 10
+            'price' => 10,
         ]);
 
         TestProduct::find(1)->update(['price' => 15]);
