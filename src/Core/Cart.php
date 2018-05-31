@@ -6,15 +6,16 @@ use BadMethodCallException;
 use Illuminate\Contracts\Support\Arrayable;
 use Freshbitsweb\LaravelCartManager\Events\CartCreated;
 use Freshbitsweb\LaravelCartManager\Events\CartCleared;
+use Freshbitsweb\LaravelCartManager\Traits\Discountable;
 use Freshbitsweb\LaravelCartManager\Events\CartItemAdded;
 use Freshbitsweb\LaravelCartManager\Contracts\CartDriver;
-use Freshbitsweb\LaravelCartManager\Events\DiscountApplied;
 use Freshbitsweb\LaravelCartManager\Events\CartItemRemoved;
 use Freshbitsweb\LaravelCartManager\Exceptions\ItemMissing;
-use Freshbitsweb\LaravelCartManager\Exceptions\IncorrectDiscount;
 
 class Cart implements Arrayable
 {
+    use Discountable;
+
     protected $id = null;
 
     protected $cartDriver;
@@ -420,56 +421,6 @@ class Cart implements Arrayable
         }
 
         throw new BadMethodCallException('Method [{$method}] does not exist. Check documentation please.');
-    }
-
-    /**
-     * Applies disount to the cart.
-     *
-     * @param float Discount Percentage
-     * @param int Coupon id
-     * @return array
-     * @throws IncorrectDiscount
-     */
-    public function applyDiscount($percentage, $couponId = null)
-    {
-        if ($this->subtotal == 0) {
-            throw new IncorrectDiscount('Discount cannot be applied on an empty cart');
-        }
-
-        $this->discountPercentage = $percentage;
-        $this->couponId = $couponId;
-        $this->discount = round(($this->subtotal * $percentage) / 100, 2);
-
-        $cartData = $this->cartUpdates($isNewItem = false, $keepDiscount = true);
-
-        event(new DiscountApplied($cartData));
-
-        return $cartData;
-    }
-
-    /**
-     * Applies flat disount to the cart.
-     *
-     * @param float Discount amount
-     * @param int Coupon id
-     * @return array
-     * @throws IncorrectDiscount
-     */
-    public function applyFlatDiscount($amount, $couponId = null)
-    {
-        if ($amount > $this->subtotal) {
-            throw new IncorrectDiscount('The discount amount cannot be more that subtotal of the cart');
-        }
-
-        $this->discount = round($amount, 2);
-        $this->discountPercentage = 0;
-        $this->couponId = $couponId;
-
-        $cartData = $this->cartUpdates($isNewItem = false, $keepDiscount = true);
-
-        event(new DiscountApplied($cartData));
-
-        return $cartData;
     }
 
     /**
