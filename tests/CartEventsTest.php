@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Event;
 use Freshbitsweb\LaravelCartManager\Events\CartCreated;
 use Freshbitsweb\LaravelCartManager\Events\CartCleared;
 use Freshbitsweb\LaravelCartManager\Events\CartItemAdded;
+use Freshbitsweb\LaravelCartManager\Events\DiscountApplied;
 use Freshbitsweb\LaravelCartManager\Events\CartItemRemoved;
 use Freshbitsweb\LaravelCartManager\Test\Support\TestProduct;
 
@@ -61,5 +62,23 @@ class CartEventsTest extends TestCase
         cart()->clear();
 
         Event::assertDispatched(CartCleared::class);
+    }
+
+    /** @test */
+    public function fire_discount_applied_event()
+    {
+        $this->addACartItem();
+
+        $cart = cart()->applyDiscount(10);
+
+        Event::assertDispatched(DiscountApplied::class, function ($e) use ($cart) {
+            return $e->cartData['discount'] === $cart['discount'];
+        });
+
+        $cart = cart()->applyFlatDiscount(10);
+
+        Event::assertDispatched(DiscountApplied::class, function ($e) use ($cart) {
+            return $e->cartData['discount'] === $cart['discount'];
+        });
     }
 }

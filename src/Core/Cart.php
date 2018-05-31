@@ -8,6 +8,7 @@ use Freshbitsweb\LaravelCartManager\Events\CartCreated;
 use Freshbitsweb\LaravelCartManager\Events\CartCleared;
 use Freshbitsweb\LaravelCartManager\Events\CartItemAdded;
 use Freshbitsweb\LaravelCartManager\Contracts\CartDriver;
+use Freshbitsweb\LaravelCartManager\Events\DiscountApplied;
 use Freshbitsweb\LaravelCartManager\Events\CartItemRemoved;
 use Freshbitsweb\LaravelCartManager\Exceptions\ItemMissing;
 use Freshbitsweb\LaravelCartManager\Exceptions\IncorrectDiscount;
@@ -439,7 +440,11 @@ class Cart implements Arrayable
         $this->couponId = $couponId;
         $this->discount = round(($this->subtotal * $percentage) / 100, 2);
 
-        return $this->cartUpdates($isNewItem = false, $keepDiscount = true);
+        $cartData = $this->cartUpdates($isNewItem = false, $keepDiscount = true);
+
+        event(new DiscountApplied($cartData));
+
+        return $cartData;
     }
 
     /**
@@ -460,7 +465,11 @@ class Cart implements Arrayable
         $this->discountPercentage = 0;
         $this->couponId = $couponId;
 
-        return $this->cartUpdates($isNewItem = false, $keepDiscount = true);
+        $cartData = $this->cartUpdates($isNewItem = false, $keepDiscount = true);
+
+        event(new DiscountApplied($cartData));
+
+        return $cartData;
     }
 
     /**
