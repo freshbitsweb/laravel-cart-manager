@@ -55,11 +55,12 @@ abstract class TestCase extends Orchestra
      * Adds an item to the cart.
      *
      * @param int Quantity of the item
+     * @param array Attributes to override
      * @return array Cart data
      */
-    protected function addACartItem($quantity = 1)
+    protected function addACartItem($quantity = 1, $attributes = [])
     {
-        $testProduct = factory(TestProduct::class)->create();
+        $testProduct = factory(TestProduct::class)->create($attributes);
 
         return TestProduct::addToCart($testProduct->id, $quantity);
     }

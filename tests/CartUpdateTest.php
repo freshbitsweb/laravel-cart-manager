@@ -24,7 +24,7 @@ class CartUpdateTest extends TestCase
     }
 
     /** @test */
-    public function add_new_cart_item_with_multiple_quantities()
+    public function add_a_new_cart_item_with_multiple_quantities()
     {
         $cart = $this->addACartItem($quantity = 3);
 
@@ -32,7 +32,7 @@ class CartUpdateTest extends TestCase
     }
 
     /** @test */
-    public function add_existing_cart_item()
+    public function add_an_existing_cart_item()
     {
         $testProduct = factory(TestProduct::class)->create();
 
@@ -59,7 +59,7 @@ class CartUpdateTest extends TestCase
 
         $cart = cart()->removeAt(0);
 
-        $this->assertCount(0, $cart['items']);
+        $this->assertTrue(cart()->isEmpty());
     }
 
     /** @test */
@@ -89,6 +89,6 @@ class CartUpdateTest extends TestCase
 
         $cart = cart()->decrementQuantityAt(0);
 
-        $this->assertCount(0, $cart['items']);
+        $this->assertTrue(cart()->isEmpty());
     }
 }
