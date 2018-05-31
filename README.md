@@ -1,6 +1,7 @@
 [![Latest Stable Version](https://poser.pugx.org/freshbitsweb/laravel-cart-manager/v/stable)](https://packagist.org/packages/freshbitsweb/laravel-cart-manager)
 [![Total Downloads](https://poser.pugx.org/freshbitsweb/laravel-cart-manager/downloads)](https://packagist.org/packages/freshbitsweb/laravel-cart-manager)
 [![License](https://poser.pugx.org/freshbitsweb/laravel-cart-manager/license)](https://packagist.org/packages/freshbitsweb/laravel-cart-manager)
+[![StyleCI](https://styleci.io/repos/115199831/shield?branch=master)](https://styleci.io/repos/115199831)
 
 # Cart Manager for Laravel 5.5+
 Let's make the cart management with Laravel a breeze.
@@ -11,7 +12,7 @@ There are a few well maintained shopping cart packages available but I wanted to
 
 ## Requirements
 
-* PHP 7.0.0+
+* PHP 7
 * Laravel 5.5+
 
 ## Installation and setup
@@ -27,7 +28,7 @@ php artisan vendor:publish --tag=laravel-cart-manager-config
 ```
 And set the options according to your requirements.
 
-3) (For using [DatabaseDriver](https://github.com/freshbitsweb/laravel-cart-manager/blob/master/src/Drivers/DatabaseDriver.php) only) Import [migrations files](https://github.com/freshbitsweb/laravel-cart-manager/tree/master/migrations) by running this command in your terminal/cmd:
+3) (For using [DatabaseDriver](https://github.com/freshbitsweb/laravel-cart-manager/blob/master/src/Drivers/DatabaseDriver.php) only) Import [migrations files](https://github.com/freshbitsweb/laravel-cart-manager/tree/master/database/migrations) by running this command in your terminal/cmd:
 ```
 php artisan vendor:publish --tag=laravel-cart-manager-migrations
 ```
