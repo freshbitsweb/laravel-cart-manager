@@ -156,10 +156,21 @@ class Cart implements Arrayable
      *
      * @return array
      */
-    public function items()
+    public function items($displayCurrency = false)
     {
-        // First toArray() for CartItem object and second one for the Illuminate Collection
-        return $this->items->map->toArray()->toArray();
+        $items = $this->items->map->toArray();
+
+        if (! $displayCurrency) {
+            return $items->toArray();
+        }
+
+        setlocale(LC_MONETARY, config('cart_manager.LC_MONETARY'));
+
+        return $items->map(function ($item) {
+            $item['price'] = money_format('%n', $item['price']);
+
+            return $item;
+        })->toArray();
     }
 
     /**
@@ -170,6 +181,41 @@ class Cart implements Arrayable
     public function data()
     {
         return $this->toArray($withItems = false);
+    }
+
+    /**
+     * Returns the cart totals with currency.
+     *
+     * @return array
+     */
+    public function totals()
+    {
+        setlocale(LC_MONETARY, config('cart_manager.LC_MONETARY'));
+
+        $totals = ['Subtotal' => money_format('%n', $this->subtotal)];
+
+        if ($this->discount > 0) {
+            $totals['Discount'] = money_format('%n', $this->discount);
+        }
+
+        if ($this->shippingCharges > 0) {
+            $totals['Shipping charges'] = money_format('%n', $this->shippingCharges);
+        }
+
+        if ($this->subtotal != $this->netTotal) {
+            $totals['Net total'] = money_format('%n', $this->netTotal);
+        }
+
+        $totals['Tax'] = money_format('%n', $this->tax);
+
+        if ($this->roundOff != 0) {
+            $totals['Total'] = money_format('%n', $this->total);
+            $totals['Round off'] = money_format('%n', $this->roundOff);
+        }
+
+        $totals['Payable'] = money_format('%n', $this->payable);
+
+        return $totals;
     }
 
     /**

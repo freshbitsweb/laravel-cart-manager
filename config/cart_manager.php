@@ -26,4 +26,8 @@ return [
 
     // Number of minutes for which the cart cookie should be valid in user's browser
     'cookie_lifetime' => 10080, // one week
+
+    // To set the currency symbol. We use php's native money_format() function
+    // in combination with setlocale() to display currency with amounts
+    'LC_MONETARY' => 'en_US.UTF-8',
 ];
