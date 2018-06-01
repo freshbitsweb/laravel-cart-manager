@@ -30,4 +30,8 @@ return [
     // To set the currency symbol. We use php's native money_format() function
     // in combination with setlocale() to display currency with amounts
     'LC_MONETARY' => 'en_US.UTF-8',
+
+    // For Database driver only: Number of hours for which the cart data is considered valid
+    // You can run/schedule the lcm_cart:clear command to remove old/invalid data
+    'cart_data_validity' => 24 * 7, // a week
 ];

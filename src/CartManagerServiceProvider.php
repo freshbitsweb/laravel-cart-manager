@@ -7,6 +7,7 @@ use Freshbitsweb\LaravelCartManager\Core\Cart;
 use Freshbitsweb\LaravelCartManager\Contracts\CartDriver;
 use Freshbitsweb\LaravelCartManager\Observers\CartObserver;
 use Freshbitsweb\LaravelCartManager\Models\Cart as CartModel;
+use Freshbitsweb\LaravelCartManager\Console\Commands\ClearCartDataCommand;
 
 class CartManagerServiceProvider extends ServiceProvider
 {
@@ -17,7 +18,6 @@ class CartManagerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // Publish config file
         $this->publishes([
             __DIR__.'/../config/cart_manager.php' => config_path('cart_manager.php'),
         ], 'laravel-cart-manager-config');
@@ -25,6 +25,10 @@ class CartManagerServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../database/migrations/' => database_path('migrations'),
         ], 'laravel-cart-manager-migrations');
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([ClearCartDataCommand::class]);
+        }
 
         CartModel::observe(CartObserver::class);
     }
