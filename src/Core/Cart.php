@@ -54,6 +54,7 @@ class Cart implements Arrayable
         if ($cartData = $this->cartDriver->getCartData()) {
             $this->setItems($cartData['items']);
             unset($cartData['items']);
+
             $this->setProperties($cartData);
         }
     }

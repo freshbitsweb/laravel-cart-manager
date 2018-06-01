@@ -163,6 +163,7 @@ trait CartItemsManager
 
             return $item;
         });
+
         $this->cartDriver->updateItemsData($this->items);
 
         $this->updateTotals($keepDiscount);
