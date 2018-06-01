@@ -13,7 +13,7 @@ class DatabaseDriver implements CartDriver
     /**
      * Returns current cart data.
      *
-     * @return Freshbitsweb\LaravelCartManager\Models\Cart
+     * @return array
      */
     public function getCartData()
     {
@@ -192,16 +192,16 @@ class DatabaseDriver implements CartDriver
      * Updates the quantity in the cart items table.
      *
      * @param int Id of the cart item
-     * @param int quantity of the cart item
+     * @param int New quantity to be set
      * @return void
      */
-    public function setCartItemQuantity($cartItemId, $quantity)
+    public function setCartItemQuantity($cartItemId, $newQuantity)
     {
-        CartItem::where('id', $cartItemId)->update(['quantity' => $quantity]);
+        CartItem::where('id', $cartItemId)->update(['quantity' => $newQuantity]);
     }
 
     /**
-     * Clears the cart details from the database.
+     * Clears the cart details including cart items from the database.
      *
      * @return void
      */
@@ -232,7 +232,7 @@ class DatabaseDriver implements CartDriver
     }
 
     /**
-     * Updates the quantity in the cart items table.
+     * Updates the details in the cart items table.
      *
      * @param \Illuminate\Support\Collection Cart items
      * @return void
