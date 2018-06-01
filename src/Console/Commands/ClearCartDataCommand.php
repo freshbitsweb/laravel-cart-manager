@@ -31,8 +31,7 @@ class ClearCartDataCommand extends Command
      */
     public function handle()
     {
-        if (! Schema::hasTable('carts'))
-        {
+        if (! Schema::hasTable('carts')) {
             $this->error('No carts table found.');
             exit;
         }
@@ -52,7 +51,7 @@ class ClearCartDataCommand extends Command
 
             $this->info("$cartsDeleted older cart record(s) removed from the table.");
         } else {
-            $this->info("No older cart records found.");
+            $this->info('No older cart records found.');
         }
 
         $this->comment('Task complete.');

@@ -68,7 +68,7 @@ class CartEventsTest extends TestCase
     public function fire_discount_applied_event()
     {
         $this->addACartItem($quantity = 1, [
-            'price' => 100
+            'price' => 100,
         ]);
 
         $cart = cart()->applyDiscount(10);

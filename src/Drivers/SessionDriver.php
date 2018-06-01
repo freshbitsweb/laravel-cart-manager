@@ -35,7 +35,7 @@ class SessionDriver implements CartDriver
 
         // We use static number 1 as the cart id
         session([
-            $this->sessionKey => array_merge($cartData, ['id' => 1])
+            $this->sessionKey => array_merge($cartData, ['id' => 1]),
         ]);
     }
 
@@ -51,7 +51,7 @@ class SessionDriver implements CartDriver
         $items = session($this->itemsKey);
 
         session([
-            $this->sessionKey => array_merge($cartData, ['items' => $items])
+            $this->sessionKey => array_merge($cartData, ['items' => $items]),
         ]);
     }
 
