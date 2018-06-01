@@ -36,7 +36,11 @@ class DatabaseDriver implements CartDriver
             }
         }
 
-        return $cartData;
+        if (! $cartData) {
+            return [];
+        }
+
+        return $cartData->toArray();
     }
 
     /**

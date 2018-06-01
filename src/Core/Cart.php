@@ -52,9 +52,9 @@ class Cart implements Arrayable
         $this->items = collect($this->items);
 
         if ($cartData = $this->cartDriver->getCartData()) {
-            $this->setItems($cartData->items);
-
-            $this->setProperties($cartData->getAttributes());
+            $this->setItems($cartData['items']);
+            unset($cartData['items']);
+            $this->setProperties($cartData);
         }
     }
 
@@ -79,9 +79,9 @@ class Cart implements Arrayable
      */
     protected function setItems($cartItems)
     {
-        $cartItems->each(function ($cartItem) {
-            $this->items->push(CartItem::createFrom($cartItem->toArray()));
-        });
+        foreach($cartItems as $cartItem) {
+            $this->items->push(CartItem::createFrom($cartItem));
+        }
     }
 
     /**
