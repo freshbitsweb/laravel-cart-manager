@@ -2,6 +2,7 @@
 [![Total Downloads](https://poser.pugx.org/freshbitsweb/laravel-cart-manager/downloads)](https://packagist.org/packages/freshbitsweb/laravel-cart-manager)
 [![License](https://poser.pugx.org/freshbitsweb/laravel-cart-manager/license)](https://packagist.org/packages/freshbitsweb/laravel-cart-manager)
 [![StyleCI](https://styleci.io/repos/115199831/shield?branch=master)](https://styleci.io/repos/115199831)
+[![Build Status](https://travis-ci.com/freshbitsweb/laravel-cart-manager.svg?branch=master)](https://travis-ci.com/freshbitsweb/laravel-cart-manager)
 
 # Cart Manager for Laravel 5.5+
 Let's make the cart management with Laravel a breeze.
