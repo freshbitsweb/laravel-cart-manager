@@ -80,7 +80,7 @@ class Cart implements Arrayable
      */
     protected function setItems($cartItems)
     {
-        foreach($cartItems as $cartItem) {
+        foreach ($cartItems as $cartItem) {
             $this->items->push(CartItem::createFrom($cartItem));
         }
     }

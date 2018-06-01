@@ -4,8 +4,8 @@ namespace Freshbitsweb\LaravelCartManager\Traits;
 
 use Freshbitsweb\LaravelCartManager\Core\CartItem;
 use Freshbitsweb\LaravelCartManager\Events\CartItemAdded;
-use Freshbitsweb\LaravelCartManager\Exceptions\ItemMissing;
 use Freshbitsweb\LaravelCartManager\Events\CartItemRemoved;
+use Freshbitsweb\LaravelCartManager\Exceptions\ItemMissing;
 
 trait CartItemsManager
 {

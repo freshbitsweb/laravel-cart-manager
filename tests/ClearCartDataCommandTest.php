@@ -15,7 +15,7 @@ class ClearCartDataCommandTest extends TestCase
         $this->artisan('lcm_carts:clear_old');
 
         $this->assertDatabaseHas('carts', [
-            'id' => 1
+            'id' => 1,
         ]);
     }
 
@@ -31,7 +31,7 @@ class ClearCartDataCommandTest extends TestCase
         $this->artisan('lcm_carts:clear_old');
 
         $this->assertDatabaseMissing('carts', [
-            'id' => 1
+            'id' => 1,
         ]);
     }
 }
