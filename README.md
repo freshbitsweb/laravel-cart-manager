@@ -8,94 +8,40 @@
 Let's make the cart management with Laravel a breeze.
 
 ## Just another shopping cart package?
-There are a few well maintained shopping cart packages available but I wanted to have a solution which is more coupled with the database and provides additional functionality like **shipping charges**, **tax**, **total round off**, **user assignment**, etc. __out-of-box__ while staying a very easy to use package.
+There are a few well maintained shopping cart packages available but I wanted to have a solution which feels like *the Laravel way* and is more coupled with the database and provides additional functionality like **shipping charges**, **discount**, **tax**, **total**,  **round off**, **guest carts**, etc. *out-of-box* while staying a very easy to use package.
 
+## Why/when to use?
+Let us decide when this package should be used?
 
-## Requirements
+1. You are looking for an easy to use solution which provides cart feature for users as well as guests.
+2. You want to make sure that the carting can work via APIs as well to support mobile applications.
+3. You want features like Shipping charges, tax, discount, round off, etc.
+4. You want to store cart data in Database, session or at a custom place.
+5. You like using the packages which are more like [the Laravel way](https://laravelshift.com/opinionated-laravel-way-shift)
 
-* PHP 7
-* Laravel 5.5+
-
-## Installation and setup
-
-1) Install the package by running this command in your terminal/cmd:
+## As Easy as 1 2 3
 ```
-composer require freshbitsweb/laravel-cart-manager
-```
+// Add to cart
+$cart = Product::addToCart($productId);
 
-2) Import [config file](https://github.com/freshbitsweb/laravel-cart-manager/blob/master/config/cart_manager.php) by running this command in your terminal/cmd:
-```
-php artisan vendor:publish --tag=laravel-cart-manager-config
-```
-And set the options according to your requirements.
+// Remove from cart
+$cart = cart()->removeAt($cartItemIndex);
 
-3) (For using [DatabaseDriver](https://github.com/freshbitsweb/laravel-cart-manager/blob/master/src/Drivers/DatabaseDriver.php) only) Import [migrations files](https://github.com/freshbitsweb/laravel-cart-manager/tree/master/database/migrations) by running this command in your terminal/cmd:
-```
-php artisan vendor:publish --tag=laravel-cart-manager-migrations
-```
-And [migrate](https://laravel.com/docs/master/migrations#running-migrations) your database to create necessary tables.
+// Apply discount
+$cart = cart()->applyDiscount($percentage);
 
-4) Add a trait to the model(s) of cart items:
-```
-...
-use Freshbitsweb\LaravelCartManager\Traits\Cartable;
-...
-class Product extends Model
-{
-    use Cartable;
-    ...
-}
+// Fetch cart
+$cart = cart()->toArray();
 ```
 
-## Playing with cart
-### Add to cart
-```
-Product::addToCart($productId);
-```
+## Documentation and Installation
+Checkout the full documentation here.
 
-### Remove from cart
+## Tests
+Run this command to run the tests of the package:
 ```
-cart()->removeAt($cartItemIndex);
+composer test
 ```
-
-### Increment/decrement quantity of a cart item
-```
-cart()->incrementQuantityAt($cartItemIndex);
-cart()->decrementQuantityAt($cartItemIndex);
-```
-
-### Clear cart
-```
-cart()->clear();
-```
-
-## Applying discount
-### Apply percentage discount
-```
-cart()->applyDiscount($percentage);
-```
-
-### Apply flat discount
-```
-cart()->applyFlatDiscount($discountAmount);
-```
-
-## Fetching cart data
-### Get complete cart details
-```
-cart()->toArray();
-```
-
-### Get cart totals
-```
-cart()->data();
-```
-
-### Get cart items
-```
-cart()->items();
-```
-
 
 ## Authors
 
