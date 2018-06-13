@@ -10,7 +10,18 @@ class CartDiscountTest extends TestCase
     public function do_not_allow_discount_on_an_empty_cart()
     {
         $this->expectException(IncorrectDiscount::class);
+
         cart()->applyDiscount(10);
+    }
+
+    /** @test */
+    public function do_not_allow_discount_more_than_100_percent()
+    {
+        $this->addACartItem();
+
+        $this->expectException(IncorrectDiscount::class);
+
+        cart()->applyDiscount(101);
     }
 
     /** @test */
