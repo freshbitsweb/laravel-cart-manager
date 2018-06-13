@@ -11,7 +11,7 @@ Let's make the cart management with Laravel a breeze.
 There are a few well maintained shopping cart packages available but I wanted to have a solution which feels like *the Laravel way* and is more coupled with the database and provides additional functionality like **shipping charges**, **discount**, **tax**, **total**,  **round off**, **guest carts**, etc. *out-of-box* while staying a very easy to use package.
 
 ## Why/when to use?
-Let us decide when this package should be used?
+Let us decide when this package should be used:
 
 1. You are looking for an easy to use solution which provides cart feature for users as well as guests.
 2. You want to make sure that the carting can work via APIs as well to support mobile applications.
@@ -34,8 +34,12 @@ $cart = cart()->applyDiscount($percentage);
 $cart = cart()->toArray();
 ```
 
+## Online Demo
+
+The demo of the package can be found at - https://laravel-cart-manager.freshbits.in
+
 ## Documentation and Installation
-Checkout the full documentation here.
+Checkout the [full documentation](https://docs.freshbits.in/laravel-cart-manager).
 
 ## Tests
 Run this command to run the tests of the package:
