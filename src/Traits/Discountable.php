@@ -17,8 +17,12 @@ trait Discountable
      */
     public function applyDiscount($percentage, $couponId = null)
     {
+        if ($percentage > 100) {
+            throw new IncorrectDiscount('Maximum percentage discount can be 100%.');
+        }
+
         if ($this->subtotal == 0) {
-            throw new IncorrectDiscount('Discount cannot be applied on an empty cart');
+            throw new IncorrectDiscount('Discount cannot be applied on an empty cart.');
         }
 
         $this->discountPercentage = $percentage;
