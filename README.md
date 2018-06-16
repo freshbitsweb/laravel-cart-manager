@@ -19,7 +19,38 @@ Let us decide when this package should be used:
 4. You want to store cart data in Database, session or at a custom place.
 5. You like using the packages which are more like [the Laravel way](https://laravelshift.com/opinionated-laravel-way-shift)
 
-## As Easy as 1 2 3
+## Installation
+
+1) Install the package by running this command in your terminal/cmd:
+```
+composer require freshbitsweb/laravel-cart-manager
+```
+
+2) Import config file by running this command in your terminal/cmd:
+```
+php artisan vendor:publish --tag=laravel-cart-manager-config
+```
+
+3) Import migrations files by running this command in your terminal/cmd:
+```
+php artisan vendor:publish --tag=laravel-cart-manager-migrations
+```
+
+4) Add a trait to the model(s) of cart items:
+
+```
+...
+use Freshbitsweb\LaravelCartManager\Traits\Cartable;
+...
+class Product extends Model
+{
+    use Cartable;
+    ...
+}
+```
+
+
+## Usage - As Easy as 1 2 3
 ```
 // Add to cart
 $cart = Product::addToCart($productId);
@@ -38,7 +69,7 @@ $cart = cart()->toArray();
 
 The demo of the package can be found at - https://laravel-cart-manager.freshbits.in
 
-## Documentation and Installation
+## Detailed Documentation
 Checkout the [full documentation](https://docs.freshbits.in/laravel-cart-manager).
 
 ## Tests
