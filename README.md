@@ -31,27 +31,32 @@ composer require freshbitsweb/laravel-cart-manager
 php artisan vendor:publish --tag=laravel-cart-manager-config
 ```
 
-3) Import migrations files by running this command in your terminal/cmd:
+3) Import migrations files by running these commands in your terminal/cmd:
 ```
 php artisan vendor:publish --tag=laravel-cart-manager-migrations
+php artisan migrate
 ```
 
 4) Add a trait to the model(s) of cart items:
 
-```
-...
+```php
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
 use Freshbitsweb\LaravelCartManager\Traits\Cartable;
-...
+
 class Product extends Model
 {
     use Cartable;
-    ...
+    // ...
 }
 ```
 
 
 ## Usage - As Easy as 1 2 3
-```
+```php
 // Add to cart
 $cart = Product::addToCart($productId);
 
