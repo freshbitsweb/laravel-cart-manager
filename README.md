@@ -38,20 +38,23 @@ php artisan vendor:publish --tag=laravel-cart-manager-migrations
 
 4) Add a trait to the model(s) of cart items:
 
-```
-...
+```php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
 use Freshbitsweb\LaravelCartManager\Traits\Cartable;
-...
+
 class Product extends Model
 {
     use Cartable;
-    ...
+    // ...
 }
 ```
 
 
 ## Usage - As Easy as 1 2 3
-```
+```php
 // Add to cart
 $cart = Product::addToCart($productId);
 
