@@ -18,15 +18,15 @@ class CartManagerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->publishes([
-            __DIR__.'/../config/cart_manager.php' => config_path('cart_manager.php'),
-        ], 'laravel-cart-manager-config');
-
-        $this->publishes([
-            __DIR__.'/../database/migrations/' => database_path('migrations'),
-        ], 'laravel-cart-manager-migrations');
-
         if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__.'/../config/cart_manager.php' => config_path('cart_manager.php'),
+            ], 'laravel-cart-manager-config');
+
+            $this->publishes([
+                __DIR__.'/../database/migrations/' => database_path('migrations'),
+            ], 'laravel-cart-manager-migrations');
+
             $this->commands([ClearCartDataCommand::class]);
         }
 
