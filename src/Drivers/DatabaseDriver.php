@@ -2,6 +2,7 @@
 
 namespace Freshbitsweb\LaravelCartManager\Drivers;
 
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Freshbitsweb\LaravelCartManager\Models\Cart;
@@ -175,7 +176,8 @@ class DatabaseDriver implements CartDriver
     protected function getCookieElement()
     {
         if (! request()->hasCookie(config('cart_manager.cookie_name'))) {
-            $cookie = str_random(20);
+            $cookie = Str::random(20);
+
             Cookie::queue(Cookie::make(
                 config('cart_manager.cookie_name'),
                 $cookie,

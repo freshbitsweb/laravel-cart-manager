@@ -12,7 +12,7 @@ use Freshbitsweb\LaravelCartManager\Test\Support\TestProduct;
 
 class CartEventsTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setup();
 

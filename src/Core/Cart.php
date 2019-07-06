@@ -3,6 +3,7 @@
 namespace Freshbitsweb\LaravelCartManager\Core;
 
 use BadMethodCallException;
+use Illuminate\Support\Str;
 use Illuminate\Contracts\Support\Arrayable;
 use Freshbitsweb\LaravelCartManager\Traits\CartTotals;
 use Freshbitsweb\LaravelCartManager\Events\CartCleared;
@@ -240,7 +241,7 @@ class Cart implements Arrayable
      */
     public function __call($method, $arguments)
     {
-        $property = camel_case(str_replace_first('get', '', $method));
+        $property = camel_case(Str::replaceFirst('get', '', $method));
 
         if (property_exists($this, $property)) {
             return $this->$property;
