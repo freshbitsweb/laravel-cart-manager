@@ -2,6 +2,7 @@
 
 namespace Freshbitsweb\LaravelCartManager\Core;
 
+use NumberFormatter;
 use BadMethodCallException;
 use Illuminate\Support\Str;
 use Illuminate\Contracts\Support\Arrayable;
@@ -17,6 +18,8 @@ class Cart implements Arrayable
     use Discountable, CartTotals, CartItemsManager;
 
     protected $id = null;
+
+    private $numberFormatter;
 
     protected $cartDriver;
 
@@ -58,6 +61,11 @@ class Cart implements Arrayable
 
             $this->setProperties($cartData);
         }
+
+        $this->numberFormatter = new NumberFormatter(
+            config('cart_manager.locale'),
+            NumberFormatter::CURRENCY
+        );
     }
 
     /**
@@ -165,10 +173,8 @@ class Cart implements Arrayable
             return $items->toArray();
         }
 
-        setlocale(LC_MONETARY, config('cart_manager.LC_MONETARY'));
-
         return $items->map(function ($item) {
-            $item['price'] = money_format('%n', $item['price']);
+            $item['price'] = $this->formatCurrency($item['price']);
 
             return $item;
         })->toArray();
@@ -191,30 +197,28 @@ class Cart implements Arrayable
      */
     public function totals()
     {
-        setlocale(LC_MONETARY, config('cart_manager.LC_MONETARY'));
-
-        $totals = ['Subtotal' => money_format('%n', $this->subtotal)];
+        $totals = ['Subtotal' => $this->formatCurrency($this->subtotal)];
 
         if ($this->discount > 0) {
-            $totals['Discount'] = money_format('%n', $this->discount);
+            $totals['Discount'] = $this->formatCurrency($this->discount);
         }
 
         if ($this->shippingCharges > 0) {
-            $totals['Shipping charges'] = money_format('%n', $this->shippingCharges);
+            $totals['Shipping charges'] = $this->formatCurrency($this->shippingCharges);
         }
 
         if ($this->subtotal != $this->netTotal) {
-            $totals['Net total'] = money_format('%n', $this->netTotal);
+            $totals['Net total'] = $this->formatCurrency($this->netTotal);
         }
 
-        $totals['Tax'] = money_format('%n', $this->tax);
+        $totals['Tax'] = $this->formatCurrency($this->tax);
 
         if ($this->roundOff != 0) {
-            $totals['Total'] = money_format('%n', $this->total);
-            $totals['Round off'] = money_format('%n', $this->roundOff);
+            $totals['Total'] = $this->formatCurrency($this->total);
+            $totals['Round off'] = $this->formatCurrency($this->roundOff);
         }
 
-        $totals['Payable'] = money_format('%n', $this->payable);
+        $totals['Payable'] = $this->formatCurrency($this->payable);
 
         return $totals;
     }
@@ -271,5 +275,19 @@ class Cart implements Arrayable
     public function isEmpty()
     {
         return $this->items->isEmpty();
+    }
+
+    /**
+     * Formats the number and return as a currency to display.
+     *
+     * @param float Number to be formatted
+     * @return string
+     */
+    public function formatCurrency($number)
+    {
+        return $this->numberFormatter->formatCurrency(
+            $number,
+            config('cart_manager.currency')
+        );
     }
 }

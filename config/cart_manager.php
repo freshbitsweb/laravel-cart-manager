@@ -27,9 +27,13 @@ return [
     // Number of minutes for which the cart cookie should be valid in user's browser
     'cookie_lifetime' => 10080, // one week
 
-    // To set the currency symbol. We use php's native money_format() function
-    // in combination with setlocale() to display currency with amounts
-    'LC_MONETARY' => 'en_US.UTF-8',
+    // We use php's NumberFormatter class to display numbers as a currency value
+    // Ref - https://www.php.net/manual/en/class.numberformatter.php
+    // Locales list - https://stackoverflow.com/a/3191729/3113599
+    'locale' => 'en_US',
+
+    // Currency to display numbers with symbols - The 3-letter ISO 4217 currency code
+    'currency' => 'USD',
 
     // For Database driver only: Number of hours for which the cart data is considered valid
     // You can run/schedule the lcm_cart:clear command to remove old/invalid data
