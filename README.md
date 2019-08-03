@@ -131,13 +131,13 @@ You may wish to remove old/invalid cart data from the database. You can specify 
 
 You can  set the driver that should be used to store and retrieve cart details in the `cart_manager.php` config file. You can use existing ones or create your own driver.
 
-## Database Driver
+### Database Driver
 
 Databse driver stores the cart data in 2 tables: `carts` and `cart_items`.  You can also remove stale data by running `ClearCartDataCommand`.
 
 Using this driver allows you to store cart data on server and customer can be displayed the same cart across channels i.e. Mobile app, website, etc.
 
-## Session Driver
+### Session Driver
 
 This driver stores the cart data in the session according to the [session driver](https://laravel.com/docs/5.6/session#introduction). This driver does not support cart management for guests via API as we cannot have a uniform way to track the user.
 
@@ -147,7 +147,7 @@ This driver stores the cart data in the session according to the [session driver
 
 All of these operations return full cart data with items.
 
-## Add to cart
+### Add to cart
 ```
 /**
  * Add to cart
@@ -160,7 +160,7 @@ All of these operations return full cart data with items.
 }
 ```
 
-## Remove from cart
+### Remove from cart
 ```
 /**
  * Remove from cart
@@ -173,7 +173,7 @@ public function removeFromCart()
 }
 ```
 
-## Increment/decrement quantity of a cart item
+### Increment/decrement quantity of a cart item
 ```
 /**
  * Increment cart item quantity
@@ -196,7 +196,7 @@ public function decrementCartItem()
 }
 ```
 
-## Clear cart
+### Clear cart
 ```
 /**
  * Clear Cart
@@ -213,22 +213,22 @@ public function clearCart()
 
 ## Fetching Cart Data
 
-## Get complete cart details
+### Get complete cart details
 ```
 $cart = cart()->toArray();
 ```
 
-## Get cart attributes
+### Get cart attributes
 ```
 $cartAttributes = cart()->data();
 ```
 
-## Get cart attrbutes with currency amount
+### Get cart attrbutes with currency amount
 ```
 $cartTotals = cart()->totals();
 ```
 
-## Get cart individual attributes
+### Get cart individual attributes
 Cart has following attributes: `subtotal`, `discount`, `discountPercentage`, `couponId`, `shippingCharges`, `netTotal`, `tax`, `total`, `roundOff`, `payable`.
 
 You can access then using a getter method. For example,
@@ -237,12 +237,12 @@ You can access then using a getter method. For example,
 $subtotal = cart()->getSubtotal();
 ```
 
-## Get cart items
+### Get cart items
 ```
 $cartItems = cart()->items();
 ```
 
-## Get cart items with currency amount
+### Get cart items with currency amount
 ```
 $cartItems = cart()->items($displayCurrency = true);
 ```
@@ -253,12 +253,12 @@ $cartItems = cart()->items($displayCurrency = true);
 
 ## Discounts
 
-## Apply percentage discount
+### Apply percentage discount
 ```
 $cart = cart()->applyDiscount($percentage);
 ```
 
-## Apply flat discount
+### Apply flat discount
 ```
 $cart = cart()->applyFlatDiscount($discountAmount);
 ```
@@ -320,7 +320,7 @@ This package fires various cart related events which you can listen to for any a
 5. CartCleared
 -> Fired when the cart is cleared.
 
-## Sample Usage
+### Sample Usage
 
 Add the event and listener entry in the `EventServiceProvider` class
 ```
