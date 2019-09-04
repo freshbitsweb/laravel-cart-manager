@@ -227,7 +227,7 @@ class DatabaseDriver implements CartDriver
         $newArray = [];
 
         foreach ($array as $key => $value) {
-            $newArray[snake_case($key)] = $value;
+            $newArray[Str::snake($key)] = $value;
         }
 
         return $newArray;

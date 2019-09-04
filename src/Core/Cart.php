@@ -77,7 +77,7 @@ class Cart implements Arrayable
     protected function setProperties($attributes)
     {
         foreach ($attributes as $key => $value) {
-            $this->{camel_case($key)} = $value;
+            $this->{Str::camel($key)} = $value;
         }
     }
 
@@ -245,7 +245,7 @@ class Cart implements Arrayable
      */
     public function __call($method, $arguments)
     {
-        $property = camel_case(Str::replaceFirst('get', '', $method));
+        $property = Str::camel(Str::replaceFirst('get', '', $method));
 
         if (property_exists($this, $property)) {
             return $this->$property;

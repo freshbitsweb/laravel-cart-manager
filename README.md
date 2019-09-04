@@ -4,7 +4,7 @@
 [![StyleCI](https://styleci.io/repos/115199831/shield?branch=master)](https://styleci.io/repos/115199831)
 [![Build Status](https://travis-ci.com/freshbitsweb/laravel-cart-manager.svg?branch=master)](https://travis-ci.com/freshbitsweb/laravel-cart-manager)
 
-# Cart Manager for Laravel 5.5+
+# Cart Manager (Laravel 5.5 - Laravel 6.0)
 Let's make the cart management with Laravel a breeze.
 
 ## Just another shopping cart package?
@@ -18,6 +18,14 @@ Let us decide when this package should be used:
 3. You want features like Shipping charges, tax, discount, round off, etc.
 4. You want to store cart data in Database, session or at a custom place.
 5. You like using the packages which are more like [the Laravel way](https://laravelshift.com/opinionated-laravel-way-shift)
+
+## Requirements
+
+* PHP 7.2+
+* Laravel 5.5+
+
+**Notes**:
+- If you are still using PHP 7.1 with Laravel 5.\*, you may use v1.2.* of this package.
 
 ## Installation
 
