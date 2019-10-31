@@ -5,7 +5,7 @@ namespace Freshbitsweb\LaravelCartManager\Drivers;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
-use Freshbitsweb\LaravelCartManager\Models\Cart;
+use Freshbitsweb\LaravelCartManager\Contracts\Cart;
 use Freshbitsweb\LaravelCartManager\Models\CartItem;
 use Freshbitsweb\LaravelCartManager\Contracts\CartDriver;
 
@@ -20,14 +20,14 @@ class DatabaseDriver implements CartDriver
     {
         $selectColumns = ['id', 'subtotal', 'discount', 'discount_percentage', 'coupon_id', 'shipping_charges', 'net_total', 'tax', 'total', 'round_off', 'payable'];
 
-        $cartData = Cart::with($this->cartItemsQuery())
+        $cartData = resolve(config('cart_manager.cart_model'))::with($this->cartItemsQuery())
             ->where($this->cartIdentifier())
             ->first($selectColumns)
         ;
 
         // If there is no cart record for the logged in customer, try with cookie identifier
         if (! $cartData && Auth::guard(config('cart_manager.auth_guard'))->check()) {
-            $cartData = Cart::with($this->cartItemsQuery())
+            $cartData = resolve(config('cart_manager.cart_model'))::with($this->cartItemsQuery())
                 ->where($this->getCookieElement())
                 ->first($selectColumns)
             ;
@@ -68,7 +68,7 @@ class DatabaseDriver implements CartDriver
     protected function assignCustomerToCartRecord()
     {
         // Assign the logged in customer to the cart record
-        Cart::where($this->getCookieElement())->update([
+        resolve(config('cart_manager.cart_model'))::where($this->getCookieElement())->update([
             'auth_user' => Auth::guard(config('cart_manager.auth_guard'))->id(),
         ]);
     }
@@ -101,7 +101,7 @@ class DatabaseDriver implements CartDriver
     {
         $cartData = $this->arraySnakeCase($cartData);
 
-        Cart::where('id', $cartId)->update($cartData);
+        resolve(config('cart_manager.cart_model'))::where('id', $cartId)->update($cartData);
     }
 
     /**
@@ -140,7 +140,7 @@ class DatabaseDriver implements CartDriver
     {
         $cartData = $this->arraySnakeCase($cartData);
 
-        $cart = Cart::updateOrCreate(
+        $cart = resolve(config('cart_manager.cart_model'))::updateOrCreate(
             $this->cartIdentifier(),
             array_merge($cartData, $this->getCookieElement())
         );
@@ -209,7 +209,7 @@ class DatabaseDriver implements CartDriver
      */
     public function clearData()
     {
-        $cart = Cart::where($this->cartIdentifier())->first();
+        $cart = resolve(config('cart_manager.cart_model'))::where($this->cartIdentifier())->first();
 
         if ($cart) {
             $cart->delete();

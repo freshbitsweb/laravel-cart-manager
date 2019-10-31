@@ -2,17 +2,17 @@
 
 namespace Freshbitsweb\LaravelCartManager\Observers;
 
-use Freshbitsweb\LaravelCartManager\Models\Cart;
+use Freshbitsweb\LaravelCartManager\Contracts\Cart as CartContract;
 
 class CartObserver
 {
     /**
      * Listen to the Cart deleting event.
      *
-     * @param \Freshbitsweb\LaravelCartManager\Models\Cart $cart
+     * @param \Freshbitsweb\LaravelCartManager\Contracts\Cart $cart
      * @return void
      */
-    public function deleting(Cart $cart)
+    public function deleting(CartContract $cart)
     {
         $cart->items()->delete();
     }

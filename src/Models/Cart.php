@@ -3,8 +3,9 @@
 namespace Freshbitsweb\LaravelCartManager\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Freshbitsweb\LaravelCartManager\Contracts\Cart as CartContract;
 
-class Cart extends Model
+class Cart extends Model implements CartContract
 {
     /**
      * The attributes that are mass assignable.

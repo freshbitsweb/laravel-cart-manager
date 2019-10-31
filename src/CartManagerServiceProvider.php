@@ -6,7 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Freshbitsweb\LaravelCartManager\Core\Cart;
 use Freshbitsweb\LaravelCartManager\Contracts\CartDriver;
 use Freshbitsweb\LaravelCartManager\Observers\CartObserver;
-use Freshbitsweb\LaravelCartManager\Models\Cart as CartModel;
+use Freshbitsweb\LaravelCartManager\Contracts\Cart as CartContract;
 use Freshbitsweb\LaravelCartManager\Console\Commands\ClearCartDataCommand;
 
 class CartManagerServiceProvider extends ServiceProvider
@@ -30,7 +30,7 @@ class CartManagerServiceProvider extends ServiceProvider
             $this->commands([ClearCartDataCommand::class]);
         }
 
-        CartModel::observe(CartObserver::class);
+        resolve(config('cart_manager.cart_model'))::observe(CartObserver::class);
     }
 
     /**
@@ -47,6 +47,9 @@ class CartManagerServiceProvider extends ServiceProvider
 
         // Bind the driver with contract
         $this->app->bind(CartDriver::class, $this->app['config']['cart_manager']['driver']);
+
+        // Bind the custom cart model with contract
+        $this->app->bind(CartContract::class, $this->app['config']['cart_manager']['cart_model']);
 
         // Bind the cart class
         $this->app->bind(Cart::class, function ($app) {

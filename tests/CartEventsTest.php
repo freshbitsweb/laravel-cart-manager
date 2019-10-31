@@ -2,6 +2,7 @@
 
 namespace Freshbitsweb\LaravelCartManager\Test;
 
+use Freshbitsweb\LaravelCartManager\Observers\CartObserver;
 use Illuminate\Support\Facades\Event;
 use Freshbitsweb\LaravelCartManager\Events\CartCleared;
 use Freshbitsweb\LaravelCartManager\Events\CartCreated;
@@ -9,6 +10,8 @@ use Freshbitsweb\LaravelCartManager\Events\CartItemAdded;
 use Freshbitsweb\LaravelCartManager\Events\CartItemRemoved;
 use Freshbitsweb\LaravelCartManager\Events\DiscountApplied;
 use Freshbitsweb\LaravelCartManager\Test\Support\TestProduct;
+use function config;
+use function resolve;
 
 class CartEventsTest extends TestCase
 {
