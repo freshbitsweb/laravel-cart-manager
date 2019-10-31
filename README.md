@@ -88,6 +88,7 @@ Laravel 5.5+
 
 ## Table of contents
 * [Configuration Options](#configuration-options)
+* [Custom models](#custom-models)
 * [Drivers](#drivers)
 * Using the Package
     * [Cart Management](#cart-management)
@@ -103,37 +104,91 @@ Laravel 5.5+
 
 `cart_manager.php` file contains the following config options for the package:
 
-1. **driver :** *(default: DatabaseDriver)*
+1. **cart_model :** *(default: Cart)*
+The [cart model](#custom-models) that should be used. You can use the existing model or create your own.
+
+2. **cart_item_model :** *(default: CartItem)*
+The [cart item model](#custom-models) that should be used. You can use the existing model or create your own.
+
+3. **driver :** *(default: DatabaseDriver)*
 The [driver](#drivers) that should be used to store and retrieve cart details. You can use existing ones or create your own.
 
-2. **auth_guard :** *(default: web)*
+4. **auth_guard :** *(default: web)*
 The authentication guard that should be used to identify the logged in customer. This package can store carts for guest users as well as logged in users.
 
-3. **shipping_charges :** *(default: 10)*
+5. **shipping_charges :** *(default: 10)*
 The amount that should be applied as shipping of the order.
 
-4. **shipping_charges_threshold :** *(default: 100)*
+6. **shipping_charges_threshold :** *(default: 100)*
 The minimum order amount to avoid the shipping charges. Take a note that order amount is calculated as subtotal of the cart items - discount amount.
 
-5. **tax_percentage :** *(default: 6%)*
+7. **tax_percentage :** *(default: 6%)*
 Tax is applied on subtotal of the cart items - discount amount + shipping charges and rounded to 2 decimals.
 
-6. **round_off_to :** *(default: 0.05)*
+8. **round_off_to :** *(default: 0.05)*
 You may wish to round of the order amount to the nearest decimal point. Options are (0 or 0.05 or 0.1 or 0.5 or 1)
 
-7. **cookie_name :** *(default: cart_identifier)*
+9. **cookie_name :** *(default: cart_identifier)*
 The name of the cookie that this package stores to identify the guests of the web app and store their cart data.
 
-8. **cookie_lifetime :** *(default: 1 week)*
+10. **cookie_lifetime :** *(default: 1 week)*
 Number of minutes for which the cart cookie should be valid in customer's browser.
 
-9. **LC_MONETARY :** *(default: en_US.UTF-8)*
+11. **LC_MONETARY :** *(default: en_US.UTF-8)*
 This option is used to display the various totals of the cart with a currency symbol. We use php's native [money_format()](//php.net/manual/en/function.money-format.php) function to display currency with amount.
 
-10. **cart_data_validity :** *(default: 1 week) (Database driver only)*
+12. **cart_data_validity :** *(default: 1 week) (Database driver only)*
 You may wish to remove old/invalid cart data from the database. You can specify the validity period and run/schedule the [ClearCartDataCommand](#commands) for the same.
 
 **[⬆ back to top](#table-of-contents)**
+
+## Custom models
+
+You can use your own custom Cart and CartItem model that extends the default.
+
+Example for custom Cart model:
+
+```php
+namespace App;
+
+use Freshbitsweb\LaravelCartManager\Models\Cart;
+
+class CustomCart extends Cart
+{
+    // Set table to carts table
+    protected $table = 'carts';
+
+    // User relation
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'auth_user', 'id');
+    }
+
+    // Coupon relation (Coupon class is not included in this package)
+    public function coupon()
+    {
+        return $this->belongsTo(Coupon::class, 'coupon_id', 'id');
+    }
+}
+```
+
+Example for custom CartItem model:
+
+```php
+namespace App;
+
+use Freshbitsweb\LaravelCartManager\Models\CartItem;
+
+class CustomCartItem extends CartItem
+{
+    protected $table = 'cart_items';
+
+    public function cart()
+    {
+        return $this->belongsTo(CustomCart::class, 'cart_id', 'id');
+    }
+}
+```
 
 ## Drivers
 

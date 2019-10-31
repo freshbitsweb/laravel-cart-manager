@@ -3,8 +3,9 @@
 namespace Freshbitsweb\LaravelCartManager\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Freshbitsweb\LaravelCartManager\Contracts\Cart as CartContract;
 
-class Cart extends Model
+class Cart extends Model implements CartContract
 {
     /**
      * The attributes that are mass assignable.
@@ -21,6 +22,6 @@ class Cart extends Model
      */
     public function items()
     {
-        return $this->hasMany(CartItem::class);
+        return $this->hasMany(config('cart_manager.cart_item_model'));
     }
 }

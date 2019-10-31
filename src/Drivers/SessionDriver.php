@@ -2,6 +2,7 @@
 
 namespace Freshbitsweb\LaravelCartManager\Drivers;
 
+use Freshbitsweb\LaravelCartManager\Contracts\Cart;
 use Freshbitsweb\LaravelCartManager\Contracts\CartDriver;
 
 class SessionDriver implements CartDriver

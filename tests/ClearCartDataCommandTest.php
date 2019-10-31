@@ -3,7 +3,6 @@
 namespace Freshbitsweb\LaravelCartManager\Test;
 
 use Carbon\Carbon;
-use Freshbitsweb\LaravelCartManager\Models\Cart;
 
 class ClearCartDataCommandTest extends TestCase
 {
@@ -26,7 +25,7 @@ class ClearCartDataCommandTest extends TestCase
 
         $validHours = config('cart_manager.cart_data_validity') + 1;
 
-        Cart::where('id', 1)->update(['updated_at' => Carbon::now()->subHours($validHours)]);
+        resolve(config('cart_manager.cart_model'))::where('id', 1)->update(['updated_at' => Carbon::now()->subHours($validHours)]);
 
         $this->artisan('lcm_carts:clear_old');
 

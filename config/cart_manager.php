@@ -1,6 +1,12 @@
 <?php
 
 return [
+    // Custom cart class
+    'cart_model' => Freshbitsweb\LaravelCartManager\Models\Cart::class,
+
+    // Custom cart item class
+    'cart_item_model' => Freshbitsweb\LaravelCartManager\Models\CartItem::class,
+
     // The driver that should be used to manage the cart (database/session/custom)
     'driver' => Freshbitsweb\LaravelCartManager\Drivers\DatabaseDriver::class,
 

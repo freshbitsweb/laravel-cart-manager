@@ -5,8 +5,6 @@ namespace Freshbitsweb\LaravelCartManager\Console\Commands;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Schema;
-use Freshbitsweb\LaravelCartManager\Models\Cart;
-use Freshbitsweb\LaravelCartManager\Models\CartItem;
 
 class ClearCartDataCommand extends Command
 {
@@ -40,14 +38,14 @@ class ClearCartDataCommand extends Command
 
         $validHours = config('cart_manager.cart_data_validity');
 
-        $query = Cart::where('updated_at', '<', Carbon::now()->subHours($validHours));
+        $query = resolve(config('cart_manager.cart_model'))::where('updated_at', '<', Carbon::now()->subHours($validHours));
 
         $cartIds = $query->get(['id']);
 
         if ($cartIds->isNotEmpty()) {
             $cartsDeleted = $query->delete();
 
-            CartItem::whereIn('cart_id', $cartIds->pluck('id')->toArray())->delete();
+            resolve(config('cart_manager.cart_item_model'))::whereIn('cart_id', $cartIds->pluck('id')->toArray())->delete();
 
             $this->info("$cartsDeleted older cart record(s) removed from the table.");
         } else {
