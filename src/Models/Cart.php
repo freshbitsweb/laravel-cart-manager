@@ -22,6 +22,6 @@ class Cart extends Model implements CartContract
      */
     public function items()
     {
-        return $this->hasMany(CartItem::class);
+        return $this->hasMany(config('cart_manager.cart_item_model'));
     }
 }

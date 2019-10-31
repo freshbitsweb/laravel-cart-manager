@@ -32,4 +32,9 @@ class CartItem extends Model
             'quantity' => $this->quantity,
         ];
     }
+
+    public function cart()
+    {
+        return $this->belongsTo();
+    }
 }

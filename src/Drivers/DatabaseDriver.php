@@ -6,7 +6,6 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Freshbitsweb\LaravelCartManager\Contracts\Cart;
-use Freshbitsweb\LaravelCartManager\Models\CartItem;
 use Freshbitsweb\LaravelCartManager\Contracts\CartDriver;
 
 class DatabaseDriver implements CartDriver
@@ -116,7 +115,7 @@ class DatabaseDriver implements CartDriver
         $cartItem = $this->arraySnakeCase($cartItem);
 
         $cartItem['cart_id'] = $cartId;
-        CartItem::create($cartItem);
+        resolve(config('cart_manager.cart_item_model'))::create($cartItem);
     }
 
     /**
@@ -127,7 +126,7 @@ class DatabaseDriver implements CartDriver
      */
     public function removeCartItem($cartItemId)
     {
-        CartItem::destroy($cartItemId);
+        resolve(config('cart_manager.cart_item_model'))::destroy($cartItemId);
     }
 
     /**
@@ -199,7 +198,7 @@ class DatabaseDriver implements CartDriver
      */
     public function setCartItemQuantity($cartItemId, $newQuantity)
     {
-        CartItem::where('id', $cartItemId)->update(['quantity' => $newQuantity]);
+        resolve(config('cart_manager.cart_item_model'))::where('id', $cartItemId)->update(['quantity' => $newQuantity]);
     }
 
     /**
@@ -242,7 +241,7 @@ class DatabaseDriver implements CartDriver
     public function updateItemsData($items)
     {
         $items->each(function ($item) {
-            CartItem::where('id', $item->id)->update([
+            resolve(config('cart_manager.cart_item_model'))::where('id', $item->id)->update([
                 'name' => $item->name,
                 'price' => $item->price,
                 'image' => $item->image,
