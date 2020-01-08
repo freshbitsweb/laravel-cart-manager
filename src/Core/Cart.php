@@ -2,16 +2,16 @@
 
 namespace Freshbitsweb\LaravelCartManager\Core;
 
-use NumberFormatter;
 use BadMethodCallException;
-use Illuminate\Support\Str;
-use Illuminate\Contracts\Support\Arrayable;
-use Freshbitsweb\LaravelCartManager\Traits\CartTotals;
+use Freshbitsweb\LaravelCartManager\Contracts\CartDriver;
 use Freshbitsweb\LaravelCartManager\Events\CartCleared;
 use Freshbitsweb\LaravelCartManager\Events\CartCreated;
-use Freshbitsweb\LaravelCartManager\Traits\Discountable;
-use Freshbitsweb\LaravelCartManager\Contracts\CartDriver;
 use Freshbitsweb\LaravelCartManager\Traits\CartItemsManager;
+use Freshbitsweb\LaravelCartManager\Traits\CartTotals;
+use Freshbitsweb\LaravelCartManager\Traits\Discountable;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Support\Str;
+use NumberFormatter;
 
 class Cart implements Arrayable
 {

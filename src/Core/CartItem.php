@@ -2,9 +2,9 @@
 
 namespace Freshbitsweb\LaravelCartManager\Core;
 
-use Illuminate\Contracts\Support\Arrayable;
 use Freshbitsweb\LaravelCartManager\Exceptions\ItemNameMissing;
 use Freshbitsweb\LaravelCartManager\Exceptions\ItemPriceMissing;
+use Illuminate\Contracts\Support\Arrayable;
 
 class CartItem implements Arrayable
 {

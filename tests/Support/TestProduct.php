@@ -2,8 +2,8 @@
 
 namespace Freshbitsweb\LaravelCartManager\Test\Support;
 
-use Illuminate\Database\Eloquent\Model;
 use Freshbitsweb\LaravelCartManager\Traits\Cartable;
+use Illuminate\Database\Eloquent\Model;
 
 class TestProduct extends Model
 {
