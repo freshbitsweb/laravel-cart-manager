@@ -141,7 +141,7 @@ You can  set the driver that should be used to store and retrieve cart details i
 
 ### Database Driver
 
-Databse driver stores the cart data in 2 tables: `carts` and `cart_items`.  You can also remove stale data by running `ClearCartDataCommand`.
+Database driver stores the cart data in 2 tables: `carts` and `cart_items`.  You can also remove stale data by running `ClearCartDataCommand`.
 
 Using this driver allows you to store cart data on server and customer can be displayed the same cart across channels i.e. Mobile app, website, etc.
 
@@ -231,7 +231,7 @@ $cart = cart()->toArray();
 $cartAttributes = cart()->data();
 ```
 
-### Get cart attrbutes with currency amount
+### Get cart attributes with currency amount
 ```
 $cartTotals = cart()->totals();
 ```
@@ -239,7 +239,7 @@ $cartTotals = cart()->totals();
 ### Get cart individual attributes
 Cart has following attributes: `subtotal`, `discount`, `discountPercentage`, `couponId`, `shippingCharges`, `netTotal`, `tax`, `total`, `roundOff`, `payable`.
 
-You can access then using a getter method. For example,
+You can access any of them using a getter method. For example,
 
 ```
 $subtotal = cart()->getSubtotal();
