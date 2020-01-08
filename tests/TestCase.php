@@ -2,9 +2,9 @@
 
 namespace Freshbitsweb\LaravelCartManager\Test;
 
-use Orchestra\Testbench\TestCase as Orchestra;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Freshbitsweb\LaravelCartManager\Test\Support\TestProduct;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 abstract class TestCase extends Orchestra
 {

@@ -2,12 +2,12 @@
 
 namespace Freshbitsweb\LaravelCartManager\Drivers;
 
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cookie;
+use Freshbitsweb\LaravelCartManager\Contracts\CartDriver;
 use Freshbitsweb\LaravelCartManager\Models\Cart;
 use Freshbitsweb\LaravelCartManager\Models\CartItem;
-use Freshbitsweb\LaravelCartManager\Contracts\CartDriver;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Str;
 
 class DatabaseDriver implements CartDriver
 {
