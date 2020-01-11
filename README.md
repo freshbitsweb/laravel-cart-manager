@@ -3,6 +3,7 @@
 [![License](https://poser.pugx.org/freshbitsweb/laravel-cart-manager/license)](https://packagist.org/packages/freshbitsweb/laravel-cart-manager)
 [![StyleCI](https://styleci.io/repos/115199831/shield?branch=master)](https://styleci.io/repos/115199831)
 [![Build Status](https://travis-ci.com/freshbitsweb/laravel-cart-manager.svg?branch=master)](https://travis-ci.com/freshbitsweb/laravel-cart-manager)
+[![Buy us a tree](https://img.shields.io/badge/Buy%20me%20a%20tree-%F0%9F%8C%B3-lightgreen?style=flat-square)](https://offset.earth/treeware?gift-trees)
 
 # Cart Manager (Laravel 5.5 - Laravel 6.0)
 Let's make the cart management with Laravel a breeze.
@@ -401,6 +402,16 @@ See also the list of [contributors](https://github.com/freshbitsweb/laravel-cart
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+
+## Treeware
+
+You're free to use this package, but if it makes it to your production environment I would highly appreciate you buying the world a tree.
+
+It’s now common knowledge that one of the best tools to tackle the climate crisis and keep our temperatures from rising above 1.5C is to <a href="https://www.bbc.co.uk/news/science-environment-48870920">plant trees</a>. If you contribute to our forest you’ll be creating employment for local families and restoring wildlife habitats.
+
+You can buy trees at for our forest here [offset.earth/treeware](https://offset.earth/treeware?gift-trees)
+
+Read more about Treeware at [treeware.earth](http://treeware.earth)
 
 ## Special Thanks to
 
