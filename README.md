@@ -5,7 +5,7 @@
 [![Build Status](https://travis-ci.com/freshbitsweb/laravel-cart-manager.svg?branch=master)](https://travis-ci.com/freshbitsweb/laravel-cart-manager)
 [![Buy us a tree](https://img.shields.io/badge/Buy%20me%20a%20tree-%F0%9F%8C%B3-lightgreen?style=flat-square)](https://plant.treeware.earth/freshbitsweb/laravel-cart-manager)
 
-# Cart Manager (Laravel 5.5+)
+# Cart Manager (Laravel 5.5 to Laravel 8.x)
 Let's make the cart management with Laravel a breeze.
 
 ## Just another shopping cart package?
@@ -21,12 +21,11 @@ Let us decide when this package should be used:
 5. You like using the packages which are more like [the Laravel way](https://laravelshift.com/opinionated-laravel-way-shift)
 
 ## Requirements
-
-* PHP 7.2.5+
-* Laravel 5.5+
-
-**Notes**:
-- If you are still using PHP <7.2.5 with <Laravel 6.x, you may use v1.2.0 of this package.
+| PHP    | Laravel | Package |
+|--------|---------|---------|
+| 7.3+   | 8.x     | v1.4.0  |
+| <7.3   | 7.x     | v1.3.0  |
+| <7.2.5 | 6.x     | v1.2.0  |
 
 ## Installation
 
@@ -82,10 +81,6 @@ $cart = cart()->toArray();
 ## Online Demo
 
 The demo of the package can be found at - https://laravel-cart-manager.freshbits.in
-
-## Requirements
-PHP 7.0.0+
-Laravel 5.5+
 
 ## Table of contents
 * [Configuration Options](#configuration-options)
