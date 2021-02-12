@@ -94,6 +94,27 @@ trait CartItemsManager
     }
 
     /**
+     * Set the quantity of a cart item.
+     *
+     * @param int Index of the cart item
+     * @param int quantity to be increased
+     * @return array
+     */
+    public function setQuantityAt($cartItemIndex, $quantity)
+    {
+        $this->existenceCheckFor($cartItemIndex);
+
+        $this->items[$cartItemIndex]->quantity = $quantity;
+
+        $this->cartDriver->setCartItemQuantity(
+            $this->items[$cartItemIndex]->id,
+            $this->items[$cartItemIndex]->quantity
+        );
+
+        return $this->cartUpdates();
+    }
+
+    /**
      * Increments the quantity of a cart item.
      *
      * @param int Index of the cart item
