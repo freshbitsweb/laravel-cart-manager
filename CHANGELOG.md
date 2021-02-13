@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.4.2] - 2020-02-13
 ### Added
-- New method `cartItemQuantitySet()` to update quantity of a cart item directly.
+- New method cartItemQuantitySet() to update quantity of a cart item directly.
 
 ## [1.4.1] - 2020-12-11
 ### Added
