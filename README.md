@@ -2,9 +2,9 @@
 [![Total Downloads](https://poser.pugx.org/freshbitsweb/laravel-cart-manager/downloads)](https://packagist.org/packages/freshbitsweb/laravel-cart-manager)
 [![License](https://poser.pugx.org/freshbitsweb/laravel-cart-manager/license)](https://packagist.org/packages/freshbitsweb/laravel-cart-manager)
 [![StyleCI](https://styleci.io/repos/115199831/shield?branch=master)](https://styleci.io/repos/115199831)
-[![Build Status](https://travis-ci.com/freshbitsweb/laravel-cart-manager.svg?branch=master)](https://travis-ci.com/freshbitsweb/laravel-cart-manager)
+[![Buy us a tree](https://img.shields.io/badge/Buy%20me%20a%20tree-%F0%9F%8C%B3-lightgreen?style=flat-square)](https://plant.treeware.earth/freshbitsweb/laravel-cart-manager)
 
-# Cart Manager (Laravel 5.5 - Laravel 6.0)
+# Cart Manager (Laravel 5.5 to Laravel 8.x)
 Let's make the cart management with Laravel a breeze.
 
 ## Just another shopping cart package?
@@ -20,12 +20,11 @@ Let us decide when this package should be used:
 5. You like using the packages which are more like [the Laravel way](https://laravelshift.com/opinionated-laravel-way-shift)
 
 ## Requirements
-
-* PHP 7.2+
-* Laravel 5.5+
-
-**Notes**:
-- If you are still using PHP 7.1 with Laravel 5.\*, you may use v1.2.* of this package.
+| PHP    | Laravel | Package |
+|--------|---------|---------|
+| 7.3+   | 8.x     | v1.4.0  |
+| <7.3   | 7.x     | v1.3.0  |
+| <7.2.5 | 6.x     | v1.2.0  |
 
 ## Installation
 
@@ -82,10 +81,6 @@ $cart = cart()->toArray();
 
 The demo of the package can be found at - https://laravel-cart-manager.freshbits.in
 
-## Requirements
-PHP 7.0.0+
-Laravel 5.5+
-
 ## Table of contents
 * [Configuration Options](#configuration-options)
 * [Drivers](#drivers)
@@ -141,7 +136,7 @@ You can  set the driver that should be used to store and retrieve cart details i
 
 ### Database Driver
 
-Databse driver stores the cart data in 2 tables: `carts` and `cart_items`.  You can also remove stale data by running `ClearCartDataCommand`.
+Database driver stores the cart data in 2 tables: `carts` and `cart_items`.  You can also remove stale data by running `ClearCartDataCommand`.
 
 Using this driver allows you to store cart data on server and customer can be displayed the same cart across channels i.e. Mobile app, website, etc.
 
@@ -231,7 +226,7 @@ $cart = cart()->toArray();
 $cartAttributes = cart()->data();
 ```
 
-### Get cart attrbutes with currency amount
+### Get cart attributes with currency amount
 ```
 $cartTotals = cart()->totals();
 ```
@@ -239,7 +234,7 @@ $cartTotals = cart()->totals();
 ### Get cart individual attributes
 Cart has following attributes: `subtotal`, `discount`, `discountPercentage`, `couponId`, `shippingCharges`, `netTotal`, `tax`, `total`, `roundOff`, `payable`.
 
-You can access then using a getter method. For example,
+You can access any of them using a getter method. For example,
 
 ```
 $subtotal = cart()->getSubtotal();
@@ -401,6 +396,16 @@ See also the list of [contributors](https://github.com/freshbitsweb/laravel-cart
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+
+## Treeware
+
+You're free to use this package, but if it makes it to your production environment I would highly appreciate you buying the world a tree.
+
+It’s now common knowledge that one of the best tools to tackle the climate crisis and keep our temperatures from rising above 1.5C is to <a href="https://www.bbc.co.uk/news/science-environment-48870920">plant trees</a>. If you contribute to our forest you’ll be creating employment for local families and restoring wildlife habitats.
+
+You can buy trees at for our forest here [offset.earth/treeware](https://plant.treeware.earth/freshbitsweb/laravel-cart-manager)
+
+Read more about Treeware at [treeware.earth](http://treeware.earth)
 
 ## Special Thanks to
 

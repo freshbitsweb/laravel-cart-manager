@@ -2,9 +2,9 @@
 
 namespace Freshbitsweb\LaravelCartManager\Test;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Freshbitsweb\LaravelCartManager\Exceptions\ItemMissing;
 use Freshbitsweb\LaravelCartManager\Test\Support\TestProduct;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CartItemsTest extends TestCase
 {

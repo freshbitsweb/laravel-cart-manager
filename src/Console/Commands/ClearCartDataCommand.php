@@ -3,10 +3,10 @@
 namespace Freshbitsweb\LaravelCartManager\Console\Commands;
 
 use Carbon\Carbon;
-use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Schema;
 use Freshbitsweb\LaravelCartManager\Models\Cart;
 use Freshbitsweb\LaravelCartManager\Models\CartItem;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Schema;
 
 class ClearCartDataCommand extends Command
 {
