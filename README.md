@@ -199,6 +199,20 @@ public function decrementCartItem()
 }
 ```
 
+### Update user input quantity of a cart item
+```
+/**
+ * Update user input quantity.
+ *
+ * @return json
+ */
+public function cartItemQuantitySet()
+{
+    return cart()->setQuantityAt(request('cartItemIndex'), request('cartQuantity'));
+}
+
+```
+
 ### Clear cart
 ```
 /**
