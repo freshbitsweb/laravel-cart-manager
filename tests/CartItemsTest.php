@@ -63,6 +63,16 @@ class CartItemsTest extends TestCase
     }
 
     /** @test */
+    public function cart_item_input_quantity_update()
+    {
+        $this->addACartItem();
+
+        $cart = cart()->setQuantityAt(0, 5);
+
+        $this->assertSame(5, $cart['items'][0]['quantity']);
+    }
+
+    /** @test */
     public function increment_cart_item_quantity()
     {
         $this->addACartItem();
