@@ -77,9 +77,9 @@ $cart = cart()->applyDiscount($percentage);
 $cart = cart()->toArray();
 ```
 
-## Online Demo
+## Demo Repository
 
-The demo of the package can be found at - https://laravel-cart-manager.freshbits.in
+The repository with the demo of using this package can be found at - https://github.com/freshbitsweb/laravel-cart-manager-demo
 
 ## Table of contents
 * [Configuration Options](#configuration-options)
