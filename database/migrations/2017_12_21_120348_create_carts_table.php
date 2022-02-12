@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCartsTable extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -40,4 +39,4 @@ class CreateCartsTable extends Migration
     {
         Schema::dropIfExists('carts');
     }
-}
+};
