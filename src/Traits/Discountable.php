@@ -8,11 +8,12 @@ use Freshbitsweb\LaravelCartManager\Exceptions\IncorrectDiscount;
 trait Discountable
 {
     /**
-     * Applies disount to the cart.
+     * Applies discount to the cart.
      *
      * @param float Discount Percentage
      * @param int Coupon id
      * @return array
+     *
      * @throws IncorrectDiscount
      */
     public function applyDiscount($percentage, $couponId = null)
@@ -37,11 +38,12 @@ trait Discountable
     }
 
     /**
-     * Applies flat disount to the cart.
+     * Applies flat discount to the cart.
      *
      * @param float Discount amount
      * @param int Coupon id
      * @return array
+     *
      * @throws IncorrectDiscount
      */
     public function applyFlatDiscount($amount, $couponId = null)
