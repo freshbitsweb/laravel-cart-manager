@@ -13,6 +13,7 @@ trait Discountable
      * @param float Discount Percentage
      * @param int Coupon id
      * @return array
+     *
      * @throws IncorrectDiscount
      */
     public function applyDiscount($percentage, $couponId = null)
@@ -42,6 +43,7 @@ trait Discountable
      * @param float Discount amount
      * @param int Coupon id
      * @return array
+     *
      * @throws IncorrectDiscount
      */
     public function applyFlatDiscount($amount, $couponId = null)
