@@ -241,6 +241,7 @@ class Cart implements Arrayable
      * @param string Method name
      * @param array Arguments
      * @return mixed
+     *
      * @throws \BadMethodCallException
      */
     public function __call($method, $arguments)

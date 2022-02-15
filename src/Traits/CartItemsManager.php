@@ -84,6 +84,7 @@ trait CartItemsManager
      *
      * @param int index of the item
      * @return void
+     *
      * @throws ItemMissing
      */
     protected function existenceCheckFor($cartItemIndex)
