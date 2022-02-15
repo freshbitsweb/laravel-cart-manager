@@ -93,6 +93,7 @@ class CartItem implements Arrayable
      *
      * @param Illuminate\Database\Eloquent\Model
      * @return void
+     *
      * @throws ItemNameMissing
      */
     protected function setName($entity)
@@ -117,6 +118,7 @@ class CartItem implements Arrayable
      *
      * @param Illuminate\Database\Eloquent\Model
      * @return void
+     *
      * @throws ItemPriceMissing
      */
     protected function setPrice($entity)
