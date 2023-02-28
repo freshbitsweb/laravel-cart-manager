@@ -4,7 +4,7 @@
 [![StyleCI](https://styleci.io/repos/115199831/shield?branch=master)](https://styleci.io/repos/115199831)
 [![Buy us a tree](https://img.shields.io/badge/Buy%20me%20a%20tree-%F0%9F%8C%B3-lightgreen?style=flat-square)](https://plant.treeware.earth/freshbitsweb/laravel-cart-manager)
 
-# Cart Manager (Laravel 5.5 to Laravel 9.x)
+# Cart Manager (Laravel 5.5 to Laravel 10.x)
 Let's make the cart management with Laravel a breeze.
 
 ## Just another shopping cart package?
@@ -22,6 +22,7 @@ Let us decide when this package should be used:
 ## Requirements
 | PHP    | Laravel | Package |
 |--------|---------|---------|
+| 8.0+   | 10.x    | v1.6.0  |
 | 8.0+   | 9.x     | v1.5.0  |
 | 7.3+   | 8.x     | v1.4.0  |
 | <7.3   | 7.x     | v1.3.0  |
